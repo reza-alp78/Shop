@@ -12,11 +12,11 @@ namespace UI.Controllers
 
         #region Constructor
 
-        //private readonly UserManager<ApplicationUser> _userManager;
-        //public AccountController(UserManager<ApplicationUser> userManager)
-        //{
-        //    _userManager = userManager;
-        //}
+        private readonly UserManager<ApplicationUser> _userManager;
+        public AccountController(UserManager<ApplicationUser> userManager)
+        {
+            _userManager = userManager;
+        }
 
         #endregion
 
@@ -30,34 +30,36 @@ namespace UI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Register([Bind("UserName,Email,Phone,Password,ConfirmPassword")] RegisterViewModel registerViewModel)
+        public async Task<IActionResult> Register([Bind("PersonName,Email,Phone,Password,ConfirmPassword")] RegisterViewModel registerViewModel)
         {
             if (!ModelState.IsValid)
             {
                 var errors = Extension.ErrorsModel(ModelState);
                 return View(registerViewModel);
             }
+
             ApplicationUser user = new ApplicationUser()
             {
-                UserName = registerViewModel.UserName,
+                PersonName = registerViewModel.PersonName,
                 Email = registerViewModel.Email,
+                UserName = registerViewModel.Email,
                 PhoneNumber = registerViewModel.Phone
             };
-            //IdentityResult result;= await _userManager.CreateAsync(user, registerViewModel.Password);
-            if (1 == 1/*result.Succeeded*/)
+
+            IdentityResult result = await _userManager.CreateAsync(user, registerViewModel.Password);
+            if (!result.Succeeded)
             {
-                return View(); //redirect
+                foreach (IdentityError item in result.Errors)
+                {
+                    ModelState.AddModelError("Register", item.Description);
+                }
+                var errors = Extension.ErrorsModel(ModelState);
+                return View(registerViewModel);
             }
-            else
-            {
-                //foreach (IdentityError item in result.Errors)
-                //{
-                //    ModelState.AddModelError("Register", item.Description);
-                //}
-                //return View(registerViewModel);
-            }
+            return View(); //redirect
         }
 
         #endregion
+
     }
 }

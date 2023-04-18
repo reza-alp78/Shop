@@ -13,7 +13,7 @@ namespace Core.ViewModel
         [DisplayName("نام کاربری")]
         [Required(ErrorMessage = "نام کاربری مقدار ندارد")]
         [StringLength(20,ErrorMessage ="حداکثر کاراکتر مجاز ۲۰ میباشد")]
-        public string UserName { get; set; }
+        public string PersonName { get; set; }
 
 
         [DisplayName("ایمیل")]
@@ -27,23 +27,23 @@ namespace Core.ViewModel
         [RegularExpression("^[0-9]*$",ErrorMessage ="شماره تماس باید به صورت عدد باشد")]
         [DataType(DataType.PhoneNumber,ErrorMessage ="باید شماره تماس وارد نمایید")]
         public string Phone { get; set; }
-
+        
 
         [DisplayName("رمز عبور")]
         [Required(ErrorMessage = "رمز عبور مقدار ندارد")]
         [DataType(DataType.Password)]
-        [MinLength(8,ErrorMessage ="حداقل کاراکتر مجاز ۸ میباشد")]
-        [MaxLength(24,ErrorMessage ="حداکثر کاراکتر مجاز ۲۴ میباشد")]
+        [RegularExpression("^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{6,24}$", ErrorMessage = "رمز عبور بایداز ۶ تا ۲۴ کاراکتر باشد ٫ که حداقل شامل یک عدد ٫ یک حرف کوچک ٫ یک حرف بزرگ و یک کاراکتر خاص مانند (!@#$و...) باشد")]       
         public string Password { get; set; }
 
 
         [DisplayName("تایید رمز عبور")]
+        [DataType(DataType.Password)]
         [Compare("Password",ErrorMessage ="رمز عبور ها یکی نمیباشند")]
         public string ConfirmPassword { get; set; }
 
         public override string ToString()
         {
-            return $"Information=> UserName: {UserName}, Email: {Email}, Phone: {Phone}, Password: {Password}, ConfrimPassword: {ConfirmPassword}";
+            return $"Information=> PersonName: {PersonName}, Email: {Email}, Phone: {Phone}, Password: {Password}, ConfrimPassword: {ConfirmPassword}";
         }
     }
 }

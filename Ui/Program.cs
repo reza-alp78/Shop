@@ -9,7 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ShopDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 //Enable Identity
-builder.Services.AddIdentity<ApplicationUser, ApplicationRole>().AddEntityFrameworkStores<ShopDbContext>()
+builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(option =>
+    option.User.RequireUniqueEmail = true).AddEntityFrameworkStores<ShopDbContext>()
     .AddDefaultTokenProviders()
     .AddUserStore<UserStore<ApplicationUser, ApplicationRole, ShopDbContext, Guid>>()
     .AddRoleStore<RoleStore<ApplicationRole, ShopDbContext, Guid>>();
