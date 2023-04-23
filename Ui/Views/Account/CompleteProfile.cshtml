@@ -1,0 +1,47 @@
+﻿@model Core.ViewModel.CompleteProfileViewModel
+
+<span>تکمیل پروفایل</span>
+<form asp-controller="Account" asp-action="CompleteProfile" method="post">
+    @Html.AntiForgeryToken()
+    <input asp-for="Id" type="hidden" value="@UserManager.GetUserAsync(User).Result.Id" />
+    <div class="row">
+        <div class="col-10">
+            <label asp-for="Province"></label>
+            <input asp-for="Province" />
+            <span asp-validation-for="Province"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-10">
+            <label asp-for="City"></label>
+            <input asp-for="City" />
+            <span asp-validation-for="City"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-10">
+            <label asp-for="Adress"></label>
+            <textarea asp-for="Adress"></textarea>
+            <span asp-validation-for="Adress"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-10">
+            <label asp-for="ZipCode"></label>
+            <input asp-for="ZipCode" />
+            <span asp-validation-for="ZipCode"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-10">
+            <label asp-for="Description"></label>
+            <textarea asp-for="Description"></textarea>
+            <span asp-validation-for="Description"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <button type="submit">ثبت</button>
+        </div>
+    </div>
+</form>

@@ -3,6 +3,7 @@ using Core.IdentityEntity;
 using Core.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace UI.Controllers
 {
@@ -64,7 +65,7 @@ namespace UI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register([Bind("PersonName,Email,Phone,Password,ConfirmPassword")] RegisterViewModel registerViewModel)
+        public async Task<IActionResult> Register([Bind("Name,LastName,Email,Phone,Password,ConfirmPassword")] RegisterViewModel registerViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -74,10 +75,11 @@ namespace UI.Controllers
 
             ApplicationUser user = new ApplicationUser()
             {
-                PersonName = registerViewModel.PersonName,
+                Name = registerViewModel.Name,
+                LastName = registerViewModel.LastName,
                 Email = registerViewModel.Email,
                 UserName = registerViewModel.Email,
-                PhoneNumber = registerViewModel.Phone
+                PhoneNumber = registerViewModel.Phone,
             };
 
             IdentityResult result = await _userManager.CreateAsync(user, registerViewModel.Password);
@@ -103,6 +105,67 @@ namespace UI.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home", new { area = "" });
+        }
+
+        #endregion
+
+        #region CompleteProfile
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> CompleteProfile(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            var model = new CompleteProfileViewModel()
+            {
+                Province = user.Province,
+                City = user.City,
+                Adress = user.Adress,
+                ZipCode = user.ZipCode,
+                Description = user.Description
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CompleteProfile([Bind("Id,Province,City,Adress,ZipCode,Description")] CompleteProfileViewModel completeProfileViewModel)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                var errors = Extension.ErrorsModel(ModelState);
+                return View(completeProfileViewModel);
+            }
+            try
+            {
+                var user = await _userManager.FindByIdAsync((completeProfileViewModel.Id).ToString());
+
+                user.Province = completeProfileViewModel.Province;
+                user.City = completeProfileViewModel.City;
+                user.Adress = completeProfileViewModel.Adress;
+                user.ZipCode = completeProfileViewModel.ZipCode;
+                user.Description = completeProfileViewModel.Description;
+
+                var result = await _userManager.UpdateAsync(user);
+                if (!result.Succeeded)
+                {
+                    foreach (IdentityError item in result.Errors)
+                    {
+                        ModelState.AddModelError("CompleteProfile", item.Description);
+                    }
+                    var errors = Extension.ErrorsModel(ModelState);
+                    return View(completeProfileViewModel);
+                }
+            }
+            catch (Exception)
+            {
+                return View(completeProfileViewModel);
+            }
+
+            return RedirectToAction("Index", "Home", new { area = "" });
+
         }
 
         #endregion

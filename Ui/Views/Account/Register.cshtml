@@ -5,9 +5,16 @@
     @Html.AntiForgeryToken()
     <div class="row">
         <div class="col-10">
-            <label asp-for="PersonName"></label>
-            <input asp-for="PersonName" />
-            <span asp-validation-for="PersonName"></span>
+            <label asp-for="Name"></label>
+            <input asp-for="Name" />
+            <span asp-validation-for="Name"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-10">
+            <label asp-for="LastName"></label>
+            <input asp-for="LastName" />
+            <span asp-validation-for="LastName"></span>
         </div>
     </div>
     <div class="row">

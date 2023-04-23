@@ -18,14 +18,11 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Account" asp-action="Register">Register</a>
-                        </li>
+                    <ul class="navbar-nav flex-grow-1">                       
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Register">( @User.Identity.Name )</a>
+                                <a class="nav-link text-dark" asp-controller="Account" asp-action="CompleteProfile" asp-route-id="@UserManager.GetUserAsync(User).Result.Id">( @UserManager.GetUserAsync(User).Result.Name )</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-controller="Account" asp-action="Logout">( خروج از حساب )</a>
@@ -34,7 +31,7 @@
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Register">بی هویت</a>
+                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">ورود/عضویت</a>
                             </li>
                         }
                     </ul>
@@ -42,7 +39,7 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container-fluid">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
