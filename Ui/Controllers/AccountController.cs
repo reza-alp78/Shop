@@ -13,9 +13,43 @@ namespace UI.Controllers
         #region Constructor
 
         private readonly UserManager<ApplicationUser> _userManager;
-        public AccountController(UserManager<ApplicationUser> userManager)
+        private readonly SignInManager<ApplicationUser> _signInManager;
+
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
+        }
+
+        #endregion
+
+        #region Login
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login([Bind("Email,Password")] LoginViewModel loginViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                var errors = Extension.ErrorsModel(ModelState);
+                return View(loginViewModel);
+            }
+
+            var result = await _signInManager.PasswordSignInAsync
+                (loginViewModel.Email, loginViewModel.Password, isPersistent: false, lockoutOnFailure: false);
+
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError("Login", "ایمیل یا رمز نادرست است");
+                return View(loginViewModel);
+            }
+            return RedirectToAction("Index", "Home", new { area = "" });
         }
 
         #endregion
@@ -56,7 +90,19 @@ namespace UI.Controllers
                 var errors = Extension.ErrorsModel(ModelState);
                 return View(registerViewModel);
             }
-            return View(); //redirect
+
+            await _signInManager.SignInAsync(user, isPersistent: false);
+            return RedirectToAction("Index", "Home", new { area = "" });
+        }
+
+        #endregion
+
+        #region Logout
+
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home", new { area = "" });
         }
 
         #endregion

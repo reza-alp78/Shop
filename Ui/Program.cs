@@ -9,8 +9,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ShopDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 //Enable Identity
-builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(option =>
-    option.User.RequireUniqueEmail = true).AddEntityFrameworkStores<ShopDbContext>()
+builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(option => {
+    option.User.RequireUniqueEmail = true;
+    option.Password.RequiredLength = 6;
+    option.Password.RequireNonAlphanumeric = true;
+    option.Password.RequireUppercase = true;
+    option.Password.RequireLowercase = true;
+    option.Password.RequireDigit = true;
+    option.Password.RequiredUniqueChars = 1;
+}).AddEntityFrameworkStores<ShopDbContext>()
     .AddDefaultTokenProviders()
     .AddUserStore<UserStore<ApplicationUser, ApplicationRole, ShopDbContext, Guid>>()
     .AddRoleStore<RoleStore<ApplicationRole, ShopDbContext, Guid>>();
@@ -21,6 +28,7 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseAuthentication();
 app.UseAuthorization();
 app.UseRouting();
 app.MapRazorPages();

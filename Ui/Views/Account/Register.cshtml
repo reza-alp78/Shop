@@ -1,5 +1,6 @@
 ﻿@model Core.ViewModel.RegisterViewModel
 
+<span>عضویت در سایت</span>
 <form asp-controller="Account" asp-action="Register" method="post">
     @Html.AntiForgeryToken()
     <div class="row">
@@ -38,8 +39,11 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-10">
+        <div class="col-6">
             <button type="submit">ثبت</button>
+        </div>
+        <div class="col-6">
+            <a asp-action="Login">قبلا عضو شدم</a>
         </div>
     </div>
 </form>

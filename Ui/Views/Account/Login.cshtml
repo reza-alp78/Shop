@@ -1,0 +1,28 @@
+﻿@model Core.ViewModel.LoginViewModel
+
+<span>ورود به سایت</span>
+<form asp-controller="Account" asp-action="Login" method="post">
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-10">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" />
+            <span asp-validation-for="Email"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-10">
+            <label asp-for="Password"></label>
+            <input asp-for="Password" />
+            <span asp-validation-for="Password"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <button type="submit">ورود</button>
+        </div>
+        <div class="col-6">
+            <a asp-action="Register">عضویت در سایت</a>
+        </div>
+    </div>
+</form>
