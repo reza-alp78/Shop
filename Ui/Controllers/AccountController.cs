@@ -184,7 +184,11 @@ namespace UI.Controllers
         [HttpPost]
         public IActionResult ConfirmEmail(string code)
         {
-            return View();
+            if (code != "1")
+            {
+                return View();
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         #endregion
