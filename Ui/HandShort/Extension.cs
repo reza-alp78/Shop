@@ -14,6 +14,14 @@ namespace Ui.HandShort
             return errors.Values.SelectMany(p => p.Errors).Select(x => x.ErrorMessage).ToList();
         }
 
+        public static int Random(int min, int max)
+        {
+            Random rnd = new Random();
+            return rnd.Next(min, max);
+
+        }
+
+
 
     }
 }

@@ -1,9 +1,12 @@
 ﻿using Ui.HandShort;
 using Core.IdentityEntity;
-using Core.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Core.ViewModel.Authentication;
+using Core.ViewModel.Smtp;
+using System.Net.Mail;
+using System.Net;
 
 namespace UI.Controllers
 {
@@ -94,7 +97,7 @@ namespace UI.Controllers
             }
 
             await _signInManager.SignInAsync(user, isPersistent: false);
-            return RedirectToAction("Index", "Home", new { area = "" });
+            return RedirectToAction("SendEmail", new { Email = user.Email });
         }
 
         #endregion
@@ -166,6 +169,48 @@ namespace UI.Controllers
 
             return RedirectToAction("Index", "Home", new { area = "" });
 
+        }
+
+        #endregion
+
+        #region ConfirmEmail
+
+        [HttpGet]
+        public IActionResult ConfirmEmail()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ConfirmEmail(string code)
+        {
+            return View();
+        }
+
+        #endregion
+
+        #region SendEmail
+
+        [HttpGet]
+        public IActionResult SendEmail(string Email)
+        {            
+
+            MailMessage mail = new MailMessage("AlpShopsIran@gmail.com", Email);
+            mail.Subject = "تایید ایمیل";
+            mail.Body = $"کد تایید شما : {Extension.Random(100000, 999999 + 1)}";
+            mail.IsBodyHtml = false;
+
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = "smtp.gmail.com";
+            smtp.Port = 587;
+            smtp.EnableSsl = true;
+
+            NetworkCredential nc = new NetworkCredential("AlpShopsIran@gmail.com", "litvuipkelgebrxt");
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = nc;
+            smtp.Send(mail);
+            ViewBag.code = Extension.Random(100000, 999999 + 1);
+            return RedirectToAction("ConfirmEmail");
         }
 
         #endregion

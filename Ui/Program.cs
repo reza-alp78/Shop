@@ -11,6 +11,7 @@ builder.Services.AddDbContext<ShopDbContext>(options =>
 //Enable Identity
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(option => {
     option.User.RequireUniqueEmail = true;
+    option.SignIn.RequireConfirmedEmail = true;
     option.Password.RequiredLength = 6;
     option.Password.RequireNonAlphanumeric = true;
     option.Password.RequireUppercase = true;
