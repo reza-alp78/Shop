@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Core.ViewModel.Authentication;
-using Core.ViewModel.Smtp;
 using System.Net.Mail;
 using System.Net;
+using Core.ViewModel.EmailSender;
 
 namespace UI.Controllers
 {
@@ -15,6 +15,9 @@ namespace UI.Controllers
     {
 
         #region Constructor
+
+        const string ConfirmCode = "_ConfirmCode";
+        const string Email = "_Email";
 
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -41,18 +44,25 @@ namespace UI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var errors = Extension.ErrorsModel(ModelState);
+                TempData["Message"] = Extension.AlertErrorsModel(ModelState);
                 return View(loginViewModel);
             }
-
             var result = await _signInManager.PasswordSignInAsync
                 (loginViewModel.Email, loginViewModel.Password, isPersistent: false, lockoutOnFailure: false);
 
+            //EmailConfirm
+            if (result.IsNotAllowed)
+            {
+                SendEmail(loginViewModel.Email);
+                return RedirectToAction("ConfirmEmail");
+            }
             if (!result.Succeeded)
             {
-                ModelState.AddModelError("Login", "ایمیل یا رمز نادرست است");
+                ModelState.AddModelError("ورود", "ایمیل یا رمز نادرست است");
+                TempData["Message"] = Extension.AlertErrorsModel(ModelState);
                 return View(loginViewModel);
             }
+            TempData["Message"] = Extension.AlertSuccess();
             return RedirectToAction("Index", "Home", new { area = "" });
         }
 
@@ -72,7 +82,7 @@ namespace UI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var errors = Extension.ErrorsModel(ModelState);
+                TempData["Message"] = Extension.AlertErrorsModel(ModelState);
                 return View(registerViewModel);
             }
 
@@ -92,25 +102,93 @@ namespace UI.Controllers
                 {
                     ModelState.AddModelError("Register", item.Description);
                 }
-                var errors = Extension.ErrorsModel(ModelState);
+                TempData["Message"] = Extension.AlertErrorsModel(ModelState);
                 return View(registerViewModel);
             }
 
-            await _signInManager.SignInAsync(user, isPersistent: false);
-            return RedirectToAction("SendEmail", new { Email = user.Email });
+            return RedirectToAction("SendEmail", new { email = user.Email });
         }
 
         #endregion
 
-        #region Logout
+        #region SendEmail
 
-        public async Task<IActionResult> Logout()
+        [HttpGet]
+        public IActionResult SendEmail(string email)
         {
-            await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home", new { area = "" });
+            try
+            {
+                var code = Extension.Random(100000, 999999 + 1);
+
+                HttpContext.Session.SetString(ConfirmCode, code.ToString());
+                HttpContext.Session.SetString(Email, email);
+
+                MailMessage mail = new MailMessage("AlpShopsIran@gmail.com", email);
+                mail.Subject = "تایید ایمیل";
+                mail.Body = $"کد تایید شما : {code}";
+                mail.IsBodyHtml = false;
+
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.gmail.com";
+                smtp.Port = 587;
+                smtp.EnableSsl = true;
+
+                NetworkCredential nc = new NetworkCredential("AlpShopsIran@gmail.com", "litvuipkelgebrxt");
+                smtp.UseDefaultCredentials = false;
+                smtp.Credentials = nc;
+                smtp.Send(mail);
+
+                TempData["Message"] = "رمز به ایمیل شما ارسال شد";
+                return RedirectToAction("ConfirmEmail");
+            }
+            catch (Exception)
+            {
+                TempData["Message"] = Extension.AlertUnKnown();
+                return View("Error");
+            }           
         }
 
-        #endregion
+        #endregion            
+
+        #region ConfirmEmail
+
+        [HttpGet]
+        public IActionResult ConfirmEmail()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ConfirmEmail(MailSender code)
+        {           
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(ConfirmCode)))
+            {
+                TempData["Message"] = "رمز منقضی شده است";
+                return RedirectToAction("Login");
+            }
+            else if(HttpContext.Session.GetString(ConfirmCode) != code.SendCode)
+            {
+                TempData["Message"] = "رمز وارد شده اشتباه است";
+                return View();               
+            }
+
+            var user = await _userManager.FindByEmailAsync(HttpContext.Session.GetString(Email));
+            user.EmailConfirmed = true;
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                foreach (IdentityError item in result.Errors)
+                {
+                    ModelState.AddModelError("CompleteProfile", item.Description);
+                }
+                TempData["Message"] = Extension.AlertErrorsModel(ModelState);
+                return View();
+            }
+            TempData["Message"] = "ایمیل شما تایید شد";
+            return RedirectToAction("Login");
+        }
+
+        #endregion      
 
         #region CompleteProfile
 
@@ -138,7 +216,7 @@ namespace UI.Controllers
 
             if (!ModelState.IsValid)
             {
-                var errors = Extension.ErrorsModel(ModelState);
+                TempData["Message"] = Extension.AlertErrorsModel(ModelState);
                 return View(completeProfileViewModel);
             }
             try
@@ -158,63 +236,30 @@ namespace UI.Controllers
                     {
                         ModelState.AddModelError("CompleteProfile", item.Description);
                     }
-                    var errors = Extension.ErrorsModel(ModelState);
+                    TempData["Message"] = Extension.AlertErrorsModel(ModelState);
                     return View(completeProfileViewModel);
                 }
             }
             catch (Exception)
             {
+                TempData["Message"] = Extension.AlertUnKnown();
                 return View(completeProfileViewModel);
             }
-
+            TempData["Message"] = Extension.AlertSuccess();
             return RedirectToAction("Index", "Home", new { area = "" });
 
         }
 
         #endregion
 
-        #region ConfirmEmail
+        #region Logout
 
         [HttpGet]
-        public IActionResult ConfirmEmail()
+        public async Task<IActionResult> Logout()
         {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult ConfirmEmail(string code)
-        {
-            if (code != "1")
-            {
-                return View();
-            }
-            return RedirectToAction("Index", "Home");
-        }
-
-        #endregion
-
-        #region SendEmail
-
-        [HttpGet]
-        public IActionResult SendEmail(string Email)
-        {            
-
-            MailMessage mail = new MailMessage("AlpShopsIran@gmail.com", Email);
-            mail.Subject = "تایید ایمیل";
-            mail.Body = $"کد تایید شما : {Extension.Random(100000, 999999 + 1)}";
-            mail.IsBodyHtml = false;
-
-            SmtpClient smtp = new SmtpClient();
-            smtp.Host = "smtp.gmail.com";
-            smtp.Port = 587;
-            smtp.EnableSsl = true;
-
-            NetworkCredential nc = new NetworkCredential("AlpShopsIran@gmail.com", "litvuipkelgebrxt");
-            smtp.UseDefaultCredentials = false;
-            smtp.Credentials = nc;
-            smtp.Send(mail);
-            ViewBag.code = Extension.Random(100000, 999999 + 1);
-            return RedirectToAction("ConfirmEmail");
+            await _signInManager.SignOutAsync();
+            TempData["Message"] = Extension.AlertSuccess();
+            return RedirectToAction("Index", "Home", new { area = "" });
         }
 
         #endregion

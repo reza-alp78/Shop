@@ -1,15 +1,14 @@
-﻿
-<form asp-action="Index" asp-controller="Account" method="post" enctype="multipart/form-data" >
-    
-    @ViewBag.code
+﻿@model Core.ViewModel.EmailSender.MailSender
+
+<form asp-action="ConfirmEmail" method="post">
     <div class="row">
         <div class="col-10">
-            <input  />
+            <input type="text" asp-for="SendCode" />
         </div>
     </div>
     <div class="row">
         <div class="col-6">
-            <button type="submit">ارسال پیام</button>
+            <button type="submit">تایید</button>
         </div>
     </div>
 </form>
