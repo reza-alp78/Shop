@@ -1,215 +1,22 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
-@font-face {
-    font-family: "MyIranianSans";
-    src: url('../fonts/Iranian Sans.ttf') format("truetype");
-}
-
-a.navbar-brand {
-    white-space: normal;
-    text-align: center;
-    word-break: break-all;
-}
-
-/* Provide sufficient contrast against white background */
-a {
-    color: #fff!important;
-    text-decoration: none;
-    background-color: transparent
-}
-
-    a:hover {
-        color: #fff!important;
-        text-decoration: none;
-    }
-option:nth-child(even) {
-    background-color: #f7f7f7!important;
-}
-textarea {
-    width: 100%;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-input[type=text], input[type=number], select {
-    width: 100%;
-    padding: 10px 16px;
-    margin: 4px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-    .form-submit-edit {
-    background: orange;
-    color: #fff;
-    border: none;
-    width: auto;
-    padding: 12px 25px;
-    border-radius: 10px;
-    cursor: pointer;
-    }
-
-    .form-submit-edit:hover {
-        background: #fe8c00;
-    }
-    .form-submit-delete {
-    background: #f72727;
-    color: #fff;
-    border: none;
-    width: auto;
-    padding: 12px 25px;
-    border-radius: 10px;
-    cursor: pointer;
-    }
-
-    .form-submit-delete:hover {
-        background: #db0202;
-    }
-
-.form-submit-Register {
-    background: #16c302;
-    color: #fff;
-    border: none;
-    width: auto;
-    padding: 12px 25px;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-    .form-submit-Register:hover {
-        background: #17a007;
-    }
-
-.btnCreate {
-    background: #6dabe4;
-    color: #fff !important;
-    border: none;
-    width: auto;
-    padding: 15px 25px;
-    border-radius: 10px;
-    cursor: pointer;
-    margin: 3px;
-}
-
-    .btnCreate:hover {
-        background: #4292dc;
-        color: #fff !important;
-    }
-
-.btnEdit {
-    background: orange;
-    color: #fff !important;
-    border: none;
-    width: auto;
-    padding: 15px 25px;
-    border-radius: 10px;
-    cursor: pointer;
-    margin: 3px;
-}
-
-    .btnEdit:hover {
-        background: #fe8c00;
-        color: #fff !important;
-    }
-
-.btnDelete {
-    background: #f72727;
-    color: #fff !important;
-    border: none;
-    width: auto;
-    padding: 15px 25px;
-    border-radius: 10px;
-    cursor: pointer;
-    margin: 3px;
-}
-
-    .btnDelete:hover {
-        background: #db0202;
-        color: #fff !important;
-    }
-
-.btnback {
-    background: #6e22b0;
-    color: #fff;
-    border: none;
-    width: auto;
-    padding: 12px 25px;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-    .btnback:hover {
-        background: #4b117d;
-        color: #fff;
-    }
-.btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
-}
-
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
-}
-
-/* Sticky footer styles
--------------------------------------------------- */
 html {
-    font-size: 18px;
-    background-color: #7fe2fc;
-    background-repeat: no-repeat;
+  font-size: 14px;
 }
 
 @media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
+  html {
+    font-size: 16px;
+  }
 }
 
-.border-top {
-    border-top: 1px solid #e5e5e5;
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-.border-bottom {
-    border-bottom: 1px solid #e5e5e5;
-}
-
-.box-shadow {
-    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
-
-button.accept-policy {
-    font-size: 1rem;
-    line-height: inherit;
-}
-
-/* Sticky footer styles
--------------------------------------------------- */
 html {
-    position: relative;
-    min-height: 100%;
+  position: relative;
+  min-height: 100%;
 }
 
 body {
-    /* Margin bottom by footer height */
-    font-family: "MyIranianSans", Tahoma, Poppins !important;
-    font-size: 18px;
-    color: #000;
-    background-color: #7fe2fc;
-    font-weight: 400;
-    text-align: right;
-    direction: rtl;
-}
-
-.footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    white-space: nowrap;
-    line-height: 60px; /* Vertically center the text there */
+  margin-bottom: 60px;
 }

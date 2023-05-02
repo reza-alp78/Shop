@@ -4,23 +4,20 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] Shop</title>
-
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-
-    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
-    <script src="~/jquery/jquery-3.6.0.min.js"></script>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Ui.styles.css" asp-append-version="true" />
 
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     @if (TempData["Message"] != null)
     {
-        <script type="text/javascript" charset="utf-8">
-            window.onload = function () {
+        <script>
+            $(document).ready(function(){
                 alert("@TempData["Message"]");
-            };
+            });
+            
         </script>
     }
     <h5>@TempData["Message"]</h5>
@@ -30,7 +27,10 @@
             @RenderBody()
         </main>
     </div>
-    <script src="~/js/site.js" asp-append-version="true"></script>
 
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -160,7 +160,12 @@ namespace UI.Controllers
 
         [HttpPost]
         public async Task<IActionResult> ConfirmEmail(MailSender code)
-        {           
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["Message"] = Extension.AlertErrorsModel(ModelState);
+                return View(code);
+            }
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(ConfirmCode)))
             {
                 TempData["Message"] = "رمز منقضی شده است";
