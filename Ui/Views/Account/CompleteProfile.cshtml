@@ -6,6 +6,27 @@
     <input asp-for="Id" type="hidden" value="@UserManager.GetUserAsync(User).Result.Id" />
     <div class="row">
         <div class="col-10">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" />
+            <span asp-validation-for="Name"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-10">
+            <label asp-for="LastName"></label>
+            <input asp-for="LastName" />
+            <span asp-validation-for="LastName"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-10">
+            <label asp-for="PhoneNumbe"></label>
+            <input asp-for="PhoneNumbe" />
+            <span asp-validation-for="PhoneNumbe"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-10">
             <label asp-for="Province"></label>
             <input asp-for="Province" />
             <span asp-validation-for="Province"></span>

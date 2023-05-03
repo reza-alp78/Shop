@@ -11,17 +11,14 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
+    @*temapdata not suport language persian*@
+    <input type="hidden" id="Message" value="@TempData["Message"]" />
     @if (TempData["Message"] != null)
     {
         <script>
-            $(document).ready(function(){
-                alert("@TempData["Message"]");
-            });
-            
+            alert(document.getElementById("Message").value);
         </script>
     }
-    <h5>@TempData["Message"]</h5>
-
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

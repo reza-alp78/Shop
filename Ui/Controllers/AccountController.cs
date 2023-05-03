@@ -204,6 +204,9 @@ namespace UI.Controllers
             var user = await _userManager.FindByIdAsync(id);
             var model = new CompleteProfileViewModel()
             {
+                Name = user.Name,
+                LastName = user.LastName,
+                PhoneNumbe = user.PhoneNumber,
                 Province = user.Province,
                 City = user.City,
                 Adress = user.Adress,
@@ -216,7 +219,7 @@ namespace UI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CompleteProfile([Bind("Id,Province,City,Adress,ZipCode,Description")] CompleteProfileViewModel completeProfileViewModel)
+        public async Task<IActionResult> CompleteProfile([Bind("Id,Name,LastName,PhoneNumbe,Province,City,Adress,ZipCode,Description")] CompleteProfileViewModel completeProfileViewModel)
         {
 
             if (!ModelState.IsValid)
@@ -228,6 +231,9 @@ namespace UI.Controllers
             {
                 var user = await _userManager.FindByIdAsync((completeProfileViewModel.Id).ToString());
 
+                user.Name = completeProfileViewModel.Name;
+                user.LastName = completeProfileViewModel.LastName;
+                user.PhoneNumber = completeProfileViewModel.PhoneNumbe;
                 user.Province = completeProfileViewModel.Province;
                 user.City = completeProfileViewModel.City;
                 user.Adress = completeProfileViewModel.Adress;
