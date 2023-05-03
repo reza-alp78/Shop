@@ -23,11 +23,18 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(option => {
     .AddDefaultTokenProviders()
     .AddUserStore<UserStore<ApplicationUser, ApplicationRole, ShopDbContext, Guid>>()
     .AddRoleStore<RoleStore<ApplicationRole, ShopDbContext, Guid>>();
+//user 15 not click evrything show login page 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(15);
+    options.LoginPath = "/Account/Login";
+    options.SlidingExpiration = true;
+});
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(120);
+    options.IdleTimeout = TimeSpan.FromDays(1);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });

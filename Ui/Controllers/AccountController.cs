@@ -7,6 +7,7 @@ using Core.ViewModel.Authentication;
 using System.Net.Mail;
 using System.Net;
 using Core.ViewModel.EmailSender;
+using Microsoft.AspNetCore.Authentication;
 
 namespace UI.Controllers
 {
@@ -15,7 +16,7 @@ namespace UI.Controllers
     {
 
         #region Constructor
-
+        //sendEmail has value and in login value be null
         const string ConfirmCode = "_ConfirmCode";
         const string Email = "_Email";
 
@@ -62,7 +63,10 @@ namespace UI.Controllers
                 TempData["Message"] = Extension.AlertErrorsModel(ModelState);
                 return View(loginViewModel);
             }
+
             TempData["Message"] = Extension.AlertSuccess();
+            HttpContext.Session.SetString(ConfirmCode, "");
+            HttpContext.Session.SetString(Email, "");
             return RedirectToAction("Index", "Home", new { area = "" });
         }
 
@@ -105,16 +109,16 @@ namespace UI.Controllers
                 TempData["Message"] = Extension.AlertErrorsModel(ModelState);
                 return View(registerViewModel);
             }
-
-            return RedirectToAction("SendEmail", new { email = user.Email });
+            SendEmail(user.Email);
+            return RedirectToAction("ConfirmEmail");
         }
 
         #endregion
 
         #region SendEmail
-
+        
         [HttpGet]
-        public IActionResult SendEmail(string email)
+        public void SendEmail(string email)
         {
             try
             {
@@ -124,8 +128,10 @@ namespace UI.Controllers
                 HttpContext.Session.SetString(Email, email);
 
                 MailMessage mail = new MailMessage("AlpShopsIran@gmail.com", email);
-                mail.Subject = "تایید ایمیل";
-                mail.Body = $"کد تایید شما : {code}";
+                mail.Subject = $"کد تایید شما: {code}";
+
+
+                mail.Body = $"کد شما : {code} " + "لطفا این کد را به کسی ندهید مدت زمان این کد 2 ساعت میباشد";
                 mail.IsBodyHtml = false;
 
                 SmtpClient smtp = new SmtpClient();
@@ -139,13 +145,12 @@ namespace UI.Controllers
                 smtp.Send(mail);
 
                 TempData["Message"] = "رمز به ایمیل شما ارسال شد";
-                return RedirectToAction("ConfirmEmail");
+               
             }
             catch (Exception)
             {
                 TempData["Message"] = Extension.AlertUnKnown();
-                return View("Error");
-            }           
+            }
         }
 
         #endregion            
@@ -159,7 +164,7 @@ namespace UI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ConfirmEmail(MailSender code)
+        public async Task<IActionResult> ConfirmEmail([Bind("SendCode")] MailSender code)
         {
             if (!ModelState.IsValid)
             {
@@ -171,10 +176,10 @@ namespace UI.Controllers
                 TempData["Message"] = "رمز منقضی شده است";
                 return RedirectToAction("Login");
             }
-            else if(HttpContext.Session.GetString(ConfirmCode) != code.SendCode)
+            else if (HttpContext.Session.GetString(ConfirmCode) != code.SendCode)
             {
                 TempData["Message"] = "رمز وارد شده اشتباه است";
-                return View();               
+                return View();
             }
 
             var user = await _userManager.FindByEmailAsync(HttpContext.Session.GetString(Email));
@@ -271,6 +276,73 @@ namespace UI.Controllers
             await _signInManager.SignOutAsync();
             TempData["Message"] = Extension.AlertSuccess();
             return RedirectToAction("Index", "Home", new { area = "" });
+        }
+
+        #endregion
+
+        #region ExistEmail
+
+        [HttpGet]
+        public IActionResult ExistEmail()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ExistEmail([Bind("Email")] MailSender mailSender)
+        {
+            if (mailSender.Email == null)
+            {
+                TempData["Message"] = Extension.AlertNotValue();
+                return View();
+            }
+
+            var user = await _userManager.FindByEmailAsync(mailSender.Email);
+
+            if (user == null)
+            {
+                TempData["Message"] = "ایمیل مورد نظر یافت نشد";
+                return View(mailSender);
+            }
+            SendEmail(mailSender.Email);
+            return RedirectToAction("ResetPassword");
+        }
+
+        #endregion
+
+        #region ResetPassword
+
+        [HttpGet]
+        public IActionResult ResetPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword([Bind("SendCode,Email,Password,ConfirmPassword")] MailSender mailSender)
+        {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(ConfirmCode)))
+            {
+                TempData["Message"] = "رمز منقضی شده است";
+                return RedirectToAction("Login");
+            }
+            else if (HttpContext.Session.GetString(ConfirmCode) != mailSender.SendCode)
+            {
+                TempData["Message"] = "تایید کد وارد شده اشتباه است ایمیل خود را مجددا چک کنید";
+                return View();
+            }
+            if (!ModelState.IsValid)
+            {
+                TempData["Message"] = Extension.AlertErrorsModel(ModelState);
+                return View(mailSender);
+            }
+            var user = await _userManager.FindByEmailAsync(HttpContext.Session.GetString(Email));
+            await _userManager.RemovePasswordAsync(user);
+            await _userManager.AddPasswordAsync(user, mailSender.Password);
+            TempData["Message"] = Extension.AlertSuccess();
+            return View("Login");
         }
 
         #endregion

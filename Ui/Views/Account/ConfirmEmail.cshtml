@@ -2,8 +2,9 @@
 
 <form asp-action="ConfirmEmail" method="post">
     <div class="row">
-        <div class="col-10">
+        <div class="col-5">
             <input type="text" asp-for="SendCode" />
+            <span class="text-danger" asp-validation-for="SendCode"></span>
         </div>
     </div>
     <div class="row">

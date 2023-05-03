@@ -29,6 +29,10 @@ namespace Ui.HandShort
         {
             return "با مشکل مواجه شد";
         }
+        public static string AlertNotValue()
+        {
+            return "مقداری وارد نشده است";
+        }
         public static string AlertUnKnown()
         {
             return "با پشتیبان تماس بگیرید";

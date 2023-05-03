@@ -4,25 +4,28 @@
 <form asp-controller="Account" asp-action="Login" method="post">
     @Html.AntiForgeryToken()
     <div class="row">
-        <div class="col-10">
+        <div class="col-12">
             <label asp-for="Email"></label>
-            <input asp-for="Email" />
-            <span asp-validation-for="Email"></span>
+            <input type="email" asp-for="Email" />
+            <span class="text-danger" asp-validation-for="Email"></span>
         </div>
     </div>
     <div class="row">
-        <div class="col-10">
+        <div class="col-12">
             <label asp-for="Password"></label>
-            <input asp-for="Password" />
-            <span asp-validation-for="Password"></span>
+            <input type="password" asp-for="Password" />
+            <span class="text-danger" asp-validation-for="Password"></span>
         </div>
     </div>
     <div class="row">
-        <div class="col-6">
+        <div class="col-4">
             <button type="submit">ورود</button>
         </div>
-        <div class="col-6">
+        <div class="col-4">
             <a asp-action="Register">عضویت در سایت</a>
+        </div>
+        <div class="col-4">
+            <a asp-action="ExistEmail">فراموشی رمز</a>
         </div>
     </div>
 </form>

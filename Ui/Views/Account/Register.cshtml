@@ -4,45 +4,45 @@
 <form asp-controller="Account" asp-action="Register" method="post">
     @Html.AntiForgeryToken()
     <div class="row">
-        <div class="col-10">
+        <div class="col-4">
             <label asp-for="Name"></label>
-            <input asp-for="Name" />
-            <span asp-validation-for="Name"></span>
+            <input type="text" asp-for="Name" />
+            <span class="text-danger" asp-validation-for="Name"></span>
         </div>
     </div>
     <div class="row">
-        <div class="col-10">
+        <div class="col-4">
             <label asp-for="LastName"></label>
-            <input asp-for="LastName" />
-            <span asp-validation-for="LastName"></span>
+            <input type="text" asp-for="LastName" />
+            <span class="text-danger" asp-validation-for="LastName"></span>
         </div>
     </div>
     <div class="row">
-        <div class="col-10">
+        <div class="col-12">
             <label asp-for="Email"></label>
-            <input asp-for="Email" />
-            <span asp-validation-for="Email"></span>
+            <input type="email" asp-for="Email" />
+            <span class="text-danger" asp-validation-for="Email"></span>
         </div>
     </div>
     <div class="row">
-        <div class="col-10">
+        <div class="col-4">
             <label asp-for="Phone"></label>
-            <input asp-for="Phone" />
-            <span asp-validation-for="Phone"></span>
+            <input type="number" asp-for="Phone" />
+            <span class="text-danger" asp-validation-for="Phone"></span>
         </div>
     </div>
     <div class="row">
-        <div class="col-10">
+        <div class="col-12">
             <label asp-for="Password"></label>
-            <input asp-for="Password" />
-            <span asp-validation-for="Password"></span>
+            <input type="password" asp-for="Password" />
+            <span class="text-danger" asp-validation-for="Password"></span>
         </div>
     </div>
     <div class="row">
-        <div class="col-10">
+        <div class="col-12">
             <label asp-for="ConfirmPassword"></label>
-            <input asp-for="ConfirmPassword" />
-            <span asp-validation-for="ConfirmPassword"></span>
+            <input type="password" asp-for="ConfirmPassword" />
+            <span class="text-danger" asp-validation-for="ConfirmPassword"></span>
         </div>
     </div>
     <div class="row">
