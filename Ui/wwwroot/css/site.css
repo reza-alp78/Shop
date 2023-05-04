@@ -1,22 +1,117 @@
+/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+    color: #fff !important;
+    text-decoration: none;
+    background-color: transparent;
+    border: 2px solid black;
+    padding: 1px 10px 5px 10px;
+    border-radius:5px;
+}
+
+    a:hover {
+        color: #fff !important;
+        text-decoration: none;
+    }
+
+option:nth-child(even) {
+    background-color: #f7f7f7 !important;
+}
+
+textarea {
+    width: 100%;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input[type=text], input[type=number], input[type=email], input[type=password], select {
+    width: 100%;
+    padding: 10px 16px;
+    margin: 4px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
 html {
-  font-size: 14px;
+    font-size: 18px;
+    background-repeat: no-repeat;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+.border-top {
+    border-top: 1px solid #e5e5e5;
 }
 
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button[type=submit] {
+    padding: 0px 10px 4px 10px;
+    color: black;
+    border-radius: 5px;
+    background-color: #54ef16;
+    border:2px solid black;   
+}
+button[type=submit]:hover {
+    background-color: #3bc802;
+}
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    font-family: Tahoma, Poppins !important;
+    font-size: 18px;
+    color: #000;
+    background: linear-gradient(180deg, #93eafc 20%, #3773be 100%);
+    font-weight: 400;
+    text-align: right;
+    direction: rtl;
 }

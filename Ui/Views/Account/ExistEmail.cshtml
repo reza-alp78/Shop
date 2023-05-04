@@ -4,17 +4,17 @@
 <form asp-controller="Account" asp-action="ExistEmail" method="post">
     @Html.AntiForgeryToken()
     <div class="row">
-        <div class="col-12">
+        <div class="col-5">
             <label asp-for="Email"></label>
             <input type="email" asp-for="Email" />
             <span class="text-danger" asp-validation-for="Email"></span>
         </div>
     </div>
     <div class="row">
-        <div class="col-6">
+        <div class="col-3">
             <button type="submit">تایید</button>
         </div>
-        <div class="col-6">
+        <div class="col-3">
             <a asp-action="Register">عضویت در سایت</a>
         </div>
     </div>
