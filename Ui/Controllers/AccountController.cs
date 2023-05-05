@@ -22,11 +22,13 @@ namespace UI.Controllers
 
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly RoleManager<ApplicationRole> _roleManager;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<ApplicationRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
         }
 
         #endregion
@@ -110,6 +112,10 @@ namespace UI.Controllers
                 return View(registerViewModel);
             }
             SendEmail(user.Email);
+            var role = new ApplicationRole();
+            role.Name = "Admin";
+            await _roleManager.CreateAsync(role);
+            await _userManager.AddToRoleAsync(user, "Admin");
             return RedirectToAction("ConfirmEmail");
         }
 

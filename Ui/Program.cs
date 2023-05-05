@@ -10,7 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ShopDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 //Enable Identity
-builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(option => {
+builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(option =>
+{
     option.User.RequireUniqueEmail = true;
     option.SignIn.RequireConfirmedEmail = true;
     option.Password.RequiredLength = 6;
@@ -51,8 +52,14 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();
+
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Account}/{action=Login}/{id?}");
+   name: "default",
+      pattern: "{controller=Account}/{action=Login}/{id?}"
+   );
+app.MapControllerRoute(
+   name: "areas",
+      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+   );
 
 app.Run();
