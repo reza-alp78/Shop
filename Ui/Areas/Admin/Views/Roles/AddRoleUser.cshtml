@@ -1,9 +1,13 @@
 ﻿@model Core.ViewModel.Admin.Roles
 
-<span>حذف نقش</span>
-<form asp-area="Admin" asp-controller="Home" asp-action="DeleteRole" method="post" role="form">
+<span>ارتقا کاربر</span>
+<form asp-area="Admin" asp-controller="Roles" asp-action="AddRoleUser" method="post" role="form">
     @Html.AntiForgeryToken()
     <div class="row">
+        <div class="col-5">
+            <label asp-for="Email"></label>
+            <input type="email" asp-for="Email" />
+        </div>
         <div class="col-5">
             <label asp-for="RoleName"></label>
             <select asp-for="RoleName" asp-items="@Model.SelectRoles"></select>
@@ -12,7 +16,7 @@
     <div class="row">
         <div class="col-12">
 
-            <button type="submit">حذف</button>
+            <button type="submit">ثبت</button>
 
         </div>
     </div>
@@ -20,6 +24,6 @@
 
 <div class="row">
     <div class="col-4">
-        <a asp-action="index">بازگشت به صفحه ادمین</a>
+        <a asp-controller="Home" asp-action="index">بازگشت به صفحه ادمین</a>
     </div>
 </div>
