@@ -1,0 +1,51 @@
+﻿@model Core.ViewModel.Admin.Roles
+
+<span>کاهش ارتقا کاربر</span>
+@*اگر نقشی داشته باشد*@
+@if (Model != null)
+{
+    @Html.AntiForgeryToken()
+    <form asp-area="Admin" asp-controller="Home" asp-action="DeleteRoleUserPost" method="post" role="form">
+        <div class="row">
+            <div class="col-5">
+                <label asp-for="Email"></label>
+                <input type="email" asp-for="Email" disabled />
+                @*برای اینکه دیسیبل است مقدار نمیفرستد*@
+                <input type="hidden" asp-for="Email">
+            </div>
+
+            <div class="col-5">
+                <label asp-for="RoleName"></label>
+                <select asp-for="RoleName" asp-items="@Model.SelectRoles"></select>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <button type="submit">حذف نقش</button>
+            </div>
+        </div>
+    </form>
+}
+else
+{
+    <form asp-area="Admin" asp-controller="Home" asp-action="DeleteRoleUser" method="get" role="form">
+        <div class="row">
+            <div class="col-5">
+                <label asp-for="Email"></label>
+                <input type="email" asp-for="Email" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <button type="submit">پیدا کردن کاربر</button>
+            </div>
+        </div>
+    </form>
+}
+
+<div class="row">
+    <div class="col-4">
+        <a asp-action="index">بازگشت به صفحه ادمین</a>
+    </div>
+</div>

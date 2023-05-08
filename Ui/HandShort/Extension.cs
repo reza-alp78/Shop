@@ -4,6 +4,9 @@ namespace Ui.HandShort
 {
     public static class Extension
     {
+
+        #region Alerts
+
         /// <summary>
         /// مقادیر دارای ارور را به ما میدهد
         /// </summary>
@@ -13,12 +16,6 @@ namespace Ui.HandShort
         {
             var error = errors.Values.SelectMany(p => p.Errors).Select(x => x.ErrorMessage).ToList();
             return string.Join(Environment.NewLine, error);
-        }
-
-        public static int Random(int min, int max)
-        {
-            Random rnd = new Random();
-            return rnd.Next(min, max);
         }
 
         public static string AlertSuccess()
@@ -33,9 +30,30 @@ namespace Ui.HandShort
         {
             return "مقداری وارد نشده است";
         }
+        public static string AlertDuplicate()
+        {
+            return "مقدار تکراری است";
+        }
+        public static string AlertNotFound()
+        {
+            return "پیدا نشد";
+        }
         public static string AlertUnKnown()
         {
             return "با پشتیبان تماس بگیرید";
         }
+
+        #endregion
+
+        #region CreateRandomNUmberCode
+
+        public static int Random(int min, int max)
+        {
+            Random rnd = new Random();
+            return rnd.Next(min, max);
+        }
+
+        #endregion
+
     }
 }
