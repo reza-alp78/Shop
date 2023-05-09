@@ -10,7 +10,6 @@
     <Folder Include="Domain\Entity\" />
     <Folder Include="Domain\Interface\" />
     <Folder Include="Domain\Service\" />
-    <Folder Include="Enum\" />
     <Folder Include="Exception\" />
   </ItemGroup>
 

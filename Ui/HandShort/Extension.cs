@@ -55,5 +55,14 @@ namespace Ui.HandShort
 
         #endregion
 
+        #region Discount
+
+        public static double Discount(double Price, double DiscountPrice)
+        {
+            return Convert.ToDouble((((Price - DiscountPrice) / Price) * 100).ToString("0.0"));
+        }
+
+        #endregion
+
     }
 }

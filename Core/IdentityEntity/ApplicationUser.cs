@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Core.ViewModel.Products;
+using Microsoft.AspNetCore.Identity;
 
 namespace Core.IdentityEntity
 {
@@ -12,5 +13,6 @@ namespace Core.IdentityEntity
         public int ZipCode { get; set; }
         public string Description { get; set; }
 
+        public List<ProductViewModel> ProductViewModels { get; set; }
     }
 }
