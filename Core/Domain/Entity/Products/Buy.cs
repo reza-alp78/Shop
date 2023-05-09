@@ -1,11 +1,11 @@
-﻿using Core.Enum;
+﻿using Core.Domain.Entity.CategoriesAndProducts;
+using Core.Domain.Entity.DriverRegister;
+using Core.Enum;
 using Core.IdentityEntity;
-using Core.ViewModel.CategoriesAndProducts;
-using Core.ViewModel.DriverRegister;
 
-namespace Core.ViewModel.Products
+namespace Core.Domain.Entity.Products
 {
-    public class BuyViewModel
+    public class Buy
     {
         public long Id { get; set; }
         public Guid UserId { get; set; }
@@ -16,8 +16,8 @@ namespace Core.ViewModel.Products
         public long ConsignmentNumber { get; set; }
         public DateTime DateTime { get; set; }
 
-        public DriverViewMolde DriverViewMolde { get; set; }
+        public Driver Driver { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
-        public ProductRegisterViewModel ProductRegisterViewModel { get; set; }
+        public ProductRegister ProductRegister { get; set; }
     }
 }

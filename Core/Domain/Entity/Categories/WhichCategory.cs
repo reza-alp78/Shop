@@ -1,8 +1,8 @@
-﻿using Core.ViewModel.Products;
+﻿using Core.Domain.Entity.Products;
 
-namespace Core.ViewModel.Categories
+namespace Core.Domain.Entity.Categories
 {
-    public class WhichCategoryViewModel
+    public class WhichCategory
     {
         public int Id { get; set; }
         public int MainCategoryId { get; set; }
@@ -10,6 +10,6 @@ namespace Core.ViewModel.Categories
         public int SubCategoryId { get; set; }
         public int UnImportantCategoryId { get; set; }
 
-        public List<ProductViewModel> ProductViewModels { get; set; }
+        public List<Product> Products { get; set; }
     }
 }

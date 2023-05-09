@@ -1,8 +1,8 @@
-﻿using Core.ViewModel.Products;
+﻿using Core.Domain.Entity.Products;
 
-namespace Core.ViewModel.DriverRegister
+namespace Core.Domain.Entity.DriverRegister
 {
-    public class DriverViewMolde
+    public class Driver
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -10,6 +10,6 @@ namespace Core.ViewModel.DriverRegister
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
 
-        public List<ProductViewModel> ProductViewModels { get; set; }
+        public List<Product> Products { get; set; }
     }
 }

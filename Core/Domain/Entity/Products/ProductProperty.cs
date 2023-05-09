@@ -1,8 +1,6 @@
-﻿using Core.ViewModel.Categories;
-
-namespace Core.ViewModel.Products
+﻿namespace Core.Domain.Entity.Products
 {
-    public class ProductViewModel
+    public class ProductProperty
     {
         public long Id { get; set; }
         public string Name { get; set; }
@@ -29,6 +27,5 @@ namespace Core.ViewModel.Products
         public bool IsExist { get; set; }
         public Guid CreatorId { get; set; }
 
-        public WhichCategoryViewModel WhichCategoryViewModel { get; set; }
     }
 }

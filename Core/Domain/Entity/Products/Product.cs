@@ -1,8 +1,10 @@
-﻿namespace Core.ViewModel.Products
+﻿using Core.Domain.Entity.CategoriesAndProducts;
+
+namespace Core.Domain.Entity.Products
 {
-    public class ProductPropertyViewModel
+    public class Product
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public bool Name { get; set; }
         public bool Price { get; set; }
         public bool DiscountPrice { get; set; }
@@ -25,5 +27,6 @@
         public bool Processor { get; set; }
         public bool RAM { get; set; }
 
+        public CategoryProductProperty CategoryProductProperty { get; set; }
     }
 }
