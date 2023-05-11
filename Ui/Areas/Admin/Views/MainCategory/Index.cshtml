@@ -1,12 +1,13 @@
 ﻿@model List<Core.ViewModel.Categories.MainCategoryViewModel>
 
 @Html.AntiForgeryToken()
-<h1>دسته اصلی</h1>
+<h1>دسته اصلی ها</h1>
 <div class="row">
     <div class="col-3">
         <a asp-controller="MainCategory" asp-action="CreateMainCategory">ساخت دسته اصلی</a>
     </div>
 </div>
+<br />
 @foreach (var item in Model)
 {
     <div class="row">
@@ -18,6 +19,9 @@
         </div>
         <div class="col-1">
             <a asp-controller="MainCategory" asp-action="DeleteMainCategory" asp-route-id="@item.Id">حذف</a>
+        </div>
+        <div class="col-2">
+            <a asp-controller="Category" asp-action="Index" asp-route-mainCategoryId="@item.Id">دسته ها</a>
         </div>
     </div>
     <br />

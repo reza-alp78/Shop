@@ -1,0 +1,31 @@
+﻿@model List<Core.ViewModel.Categories.CategoryViewModel>
+
+@Html.AntiForgeryToken()
+<h1>دسته ها</h1>
+<div class="row">
+    <div class="col-9">
+        <a asp-controller="Category" asp-action="CreateCategory">ساخت دسته</a>
+    </div>
+    <div class="col-3">
+        <a asp-controller="MainCategory" asp-action="Index">بازگشت به دسته اصلی</a>
+    </div>
+</div>
+<br />
+@foreach (var item in Model)
+{
+    <div class="row">
+        <div class="col-3">
+            <label>@item.CategoryName</label>
+        </div>
+        <div class="col-1">
+            <a asp-controller="Category" asp-action="UpdateCategory" asp-route-id="@item.Id">ویرایش</a>
+        </div>
+        <div class="col-1">
+            <a asp-controller="Category" asp-action="DeleteCategory" asp-route-id="@item.Id">حذف</a>
+        </div>
+        <div class="col-2">
+            <a asp-controller="SubCategory" asp-action="Index">زیر دسته ها</a>
+        </div>
+    </div>
+    <br />
+}

@@ -1,6 +1,6 @@
 ﻿@model Core.ViewModel.Categories.MainCategoryViewModel
 
-<span>اضافه کردن دسته اصلی</span>
+<span>ویرایش کردن دسته اصلی</span>
 <form asp-area="Admin" asp-controller="MainCategory" asp-action="UpdateMainCategory" method="post" role="form">
     @Html.AntiForgeryToken()
     <input type="hidden" asp-for="Id" />
@@ -17,9 +17,9 @@
         </div>
     </div>
 </form>
-
+<br />
 <div class="row">
     <div class="col-4">
-        <a asp-controller="MainCategory" asp-action="Index">بازگشت به صفحه دسته بندی</a>
+        <a asp-controller="MainCategory" asp-action="Index">بازگشت به صفحه دسته بندی قبلی</a>
     </div>
 </div>

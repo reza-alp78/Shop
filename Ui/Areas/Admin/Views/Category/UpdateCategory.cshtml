@@ -1,0 +1,25 @@
+﻿@model Core.ViewModel.Categories.CategoryViewModel
+
+<span>ویرایش کردن دسته</span>
+<form asp-area="Admin" asp-controller="Category" asp-action="UpdateCategory" method="post" role="form">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <div class="row">
+        <div class="col-5">
+            <label asp-for="CategoryName"></label>
+            <input type="text" asp-for="CategoryName" />
+            <span class="text-danger" asp-validation-for="CategoryName"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <button type="submit">ویرایش</button>
+        </div>
+    </div>
+</form>
+<br />
+<div class="row">
+    <div class="col-4">
+        <a asp-controller="Category" asp-action="Index">بازگشت به صفحه دسته بندی قبلی</a>
+    </div>
+</div>

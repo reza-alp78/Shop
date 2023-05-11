@@ -8,6 +8,7 @@ namespace Ui.Mappings
     {
         public MappingProfile()
         {
+
             #region Categories
 
             CreateMap<MainCategoryViewModel, MainCategory>().ReverseMap();
@@ -19,6 +20,7 @@ namespace Ui.Mappings
             CreateMap<UnImportantCategoryViewModel, UnImportantCategory>().ReverseMap();
 
             #endregion
+
         }
     }
 }
