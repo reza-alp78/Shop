@@ -4,6 +4,7 @@
     {
         public int Id { get; set; }
         public string CategoryName { get; set; }
+        public int MainCategoryId { get; set; }
         public MainCategory MainCategory { get; set; }
         public List<SubCategory> SubCategories { get; set; }
     }

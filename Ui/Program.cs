@@ -1,8 +1,10 @@
 using Core.IdentityEntity;
 using Infrastructure.DataBaseContext;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Ui.Mappings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +41,23 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+
+builder.Services.AddSingleton<DapperContext>();
+
+//reflections
+//var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+//var repositoryAssembly = assemblies.First(a => a.FullName.Contains("Alp.Repository"));
+var repositoryAssembly = typeof(SaveChangesAsyncService).Assembly.ExportedTypes;
+
+var typesToRegistery = repositoryAssembly.Where(t => t.Namespace.StartsWith("Infrastructure.Services") && t.Name.Contains("Service") && t.IsClass);
+
+foreach (var typeToRegister in typesToRegistery)
+{
+    builder.Services.AddScoped(typeToRegister.GetInterfaces()[0], typeToRegister);
+}
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();

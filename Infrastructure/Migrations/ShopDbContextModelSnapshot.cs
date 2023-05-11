@@ -33,7 +33,7 @@ namespace Infrastructure.Migrations
                     b.Property<string>("CategoryName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("MainCategoryId")
+                    b.Property<int>("MainCategoryId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -67,15 +67,15 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("SubCategoryName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("categoryId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("categoryId");
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("SubCategories");
                 });
@@ -88,7 +88,7 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("SubCategoryId")
+                    b.Property<int>("SubCategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("UnImportantCategoryName")
@@ -656,25 +656,31 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Core.Domain.Entity.Categories.MainCategory", "MainCategory")
                         .WithMany("Category")
-                        .HasForeignKey("MainCategoryId");
+                        .HasForeignKey("MainCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("MainCategory");
                 });
 
             modelBuilder.Entity("Core.Domain.Entity.Categories.SubCategory", b =>
                 {
-                    b.HasOne("Core.Domain.Entity.Categories.Category", "category")
+                    b.HasOne("Core.Domain.Entity.Categories.Category", "Category")
                         .WithMany("SubCategories")
-                        .HasForeignKey("categoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("category");
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Core.Domain.Entity.Categories.UnImportantCategory", b =>
                 {
                     b.HasOne("Core.Domain.Entity.Categories.SubCategory", "SubCategory")
                         .WithMany("UnImportantCategory")
-                        .HasForeignKey("SubCategoryId");
+                        .HasForeignKey("SubCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("SubCategory");
                 });

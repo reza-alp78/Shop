@@ -1,0 +1,24 @@
+﻿@model Core.ViewModel.Categories.MainCategoryViewModel
+
+<span>اضافه کردن دسته اصلی</span>
+<form asp-area="Admin" asp-controller="MainCategory" asp-action="CreateMainCategory" method="post" role="form">
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-5">
+            <label asp-for="MainCategoryName"></label>
+            <input type="text" asp-for="MainCategoryName" />
+            <span class="text-danger" asp-validation-for="MainCategoryName"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <button type="submit">ایجاد</button>
+        </div>
+    </div>
+</form>
+
+<div class="row">
+    <div class="col-4">
+        <a asp-controller="MainCategory" asp-action="Index">بازگشت به صفحه دسته بندی</a>
+    </div>
+</div>

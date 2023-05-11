@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialAllModels : Migration
+    public partial class InitialModels : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -140,7 +140,7 @@ namespace Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MainCategoryId = table.Column<int>(type: "int", nullable: true)
+                    MainCategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -149,7 +149,8 @@ namespace Infrastructure.Migrations
                         name: "FK_Categories_MainCategories_MainCategoryId",
                         column: x => x.MainCategoryId,
                         principalTable: "MainCategories",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -259,16 +260,17 @@ namespace Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SubCategoryName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    categoryId = table.Column<int>(type: "int", nullable: true)
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SubCategories", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SubCategories_Categories_categoryId",
-                        column: x => x.categoryId,
+                        name: "FK_SubCategories_Categories_CategoryId",
+                        column: x => x.CategoryId,
                         principalTable: "Categories",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -278,7 +280,7 @@ namespace Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UnImportantCategoryName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SubCategoryId = table.Column<int>(type: "int", nullable: true)
+                    SubCategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -287,7 +289,8 @@ namespace Infrastructure.Migrations
                         name: "FK_UnImportantCategories_SubCategories_SubCategoryId",
                         column: x => x.SubCategoryId,
                         principalTable: "SubCategories",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -336,9 +339,9 @@ namespace Infrastructure.Migrations
                 column: "WhichCategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SubCategories_categoryId",
+                name: "IX_SubCategories_CategoryId",
                 table: "SubCategories",
-                column: "categoryId");
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UnImportantCategories_SubCategoryId",

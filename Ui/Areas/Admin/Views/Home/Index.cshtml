@@ -1,4 +1,7 @@
-﻿<h1>HomeAdmin</h1>
+﻿<h1>صفحه ادمین</h1>
+
+<hr />
+
 <div class="row">
     <div class="col-3">
         <a asp-controller="Roles" asp-action="CreateRole">ساخت نقش</a>
@@ -14,5 +17,25 @@
 
     <div class="col-3">
         <a asp-controller="Roles" asp-action="DeleteRoleUser">کاهش ارتقا کاربر</a>
+    </div>
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="col-3">
+        <a asp-controller="MainCategory" asp-action="Index">دسته اصلی</a>
+    </div>
+
+    <div class="col-3">
+        <a asp-controller="Category" asp-action="Index">دسته</a>
+    </div>
+
+    <div class="col-3">
+        <a asp-controller="SubCategory" asp-action="Index">زیردسته</a>
+    </div>
+
+    <div class="col-3">
+        <a asp-controller="UnImportantCategory" asp-action="Index">دسته فرعی</a>
     </div>
 </div>
