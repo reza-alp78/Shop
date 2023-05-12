@@ -1,0 +1,25 @@
+﻿@model Core.ViewModel.Categories.SubCategoryViewModel
+
+<span>ویرایش کردن زیردسته</span>
+<form asp-area="Admin" asp-controller="SubCategory" asp-action="UpdateSubCategory" method="post" role="form">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <div class="row">
+        <div class="col-5">
+            <label asp-for="SubCategoryName"></label>
+            <input type="text" asp-for="SubCategoryName" />
+            <span class="text-danger" asp-validation-for="SubCategoryName"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <button type="submit">ویرایش</button>
+        </div>
+    </div>
+</form>
+<br />
+<div class="row">
+    <div class="col-4">
+        <a asp-controller="SubCategory" asp-action="Index">بازگشت به صفحه دسته بندی قبلی</a>
+    </div>
+</div>

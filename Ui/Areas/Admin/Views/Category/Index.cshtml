@@ -24,7 +24,7 @@
             <a asp-controller="Category" asp-action="DeleteCategory" asp-route-id="@item.Id">حذف</a>
         </div>
         <div class="col-2">
-            <a asp-controller="SubCategory" asp-action="Index">زیر دسته ها</a>
+            <a asp-controller="SubCategory" asp-action="Index" asp-route-categoryId="@item.Id">زیردسته ها</a>
         </div>
     </div>
     <br />
