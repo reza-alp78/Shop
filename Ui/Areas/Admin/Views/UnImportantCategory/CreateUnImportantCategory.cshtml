@@ -1,0 +1,27 @@
+﻿@model Core.ViewModel.Categories.UnImportantCategoryViewModel
+
+<span>اضافه کردن دسته فرعی</span>
+<form asp-area="Admin" asp-controller="UnImportantCategory" asp-action="CreateUnImportantCategory" method="post" role="form">
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-5">
+            <label asp-for="UnImportantCategoryName"></label>
+            <input type="text" asp-for="UnImportantCategoryName" />
+            <span class="text-danger" asp-validation-for="UnImportantCategoryName"></span>
+        </div>
+        <div class="col-5">
+            <span>ایجاد دسته فرعی برای @Model.SubCategoryName</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <button type="submit">ایجاد</button>
+        </div>
+    </div>
+</form>
+<br />
+<div class="row">
+    <div class="col-4">
+        <a asp-controller="UnImportantCategory" asp-action="Index">بازگشت به صفحه دسته بندی قبلی</a>
+    </div>
+</div>

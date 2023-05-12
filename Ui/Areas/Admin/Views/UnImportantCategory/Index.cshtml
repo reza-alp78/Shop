@@ -1,0 +1,28 @@
+﻿@model List<Core.ViewModel.Categories.UnImportantCategoryViewModel>
+
+@Html.AntiForgeryToken()
+<h1>دسته فرعی ها</h1>
+<div class="row">
+    <div class="col-9">
+        <a asp-controller="UnImportantCategory" asp-action="CreateUnImportantCategory">ساخت دسته فرعی</a>
+    </div>
+    <div class="col-3">
+        <a asp-controller="SubCategory" asp-action="Index">بازگشت به زیردسته</a>
+    </div>
+</div>
+<br />
+@foreach (var item in Model)
+{
+    <div class="row">
+        <div class="col-3">
+            <label>@item.UnImportantCategoryName</label>
+        </div>
+        <div class="col-1">
+            <a asp-controller="UnImportantCategory" asp-action="UpdateUnImportantCategory" asp-route-id="@item.Id">ویرایش</a>
+        </div>
+        <div class="col-1">
+            <a asp-controller="UnImportantCategory" asp-action="DeleteUnImportantCategory" asp-route-id="@item.Id">حذف</a>
+        </div>
+    </div>
+    <br />
+}

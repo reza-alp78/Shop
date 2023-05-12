@@ -27,8 +27,8 @@ namespace Infrastructure.Services.SubCategories
             var query = "SELECT * FROM SubCategories";
             using (var connection = _dapper.CreateConnection())
             {
-                var SubCategories = await connection.QueryAsync<SubCategory>(query);
-                return SubCategories.ToList();
+                var subCategories = await connection.QueryAsync<SubCategory>(query);
+                return subCategories.ToList();
             }
         }
 
@@ -37,8 +37,8 @@ namespace Infrastructure.Services.SubCategories
             var query = $"SELECT [Id],[SubCategoryName],[CategoryId] FROM SubCategories WHERE CategoryId = {categoryId}";
             using (var connection = _dapper.CreateConnection())
             {
-                var SubCategories = await connection.QueryAsync<SubCategory>(query);
-                return SubCategories.ToList();
+                var subCategories = await connection.QueryAsync<SubCategory>(query);
+                return subCategories.ToList();
             }
         }
 
@@ -51,21 +51,21 @@ namespace Infrastructure.Services.SubCategories
             }
         }
 
-        public async Task<SubCategory> AddSubCategory(SubCategory SubCategory)
+        public async Task<SubCategory> AddSubCategory(SubCategory subCategory)
         {
-            await _db.SubCategories.AddAsync(SubCategory);
-            return SubCategory;
+            await _db.SubCategories.AddAsync(subCategory);
+            return subCategory;
         }
 
-        public SubCategory UpdateSubCategory(SubCategory SubCategory)
+        public SubCategory UpdateSubCategory(SubCategory subCategory)
         {
-            _db.Entry(SubCategory).State = EntityState.Modified;
-            return SubCategory;
+            _db.Entry(subCategory).State = EntityState.Modified;
+            return subCategory;
         }
 
-        public void DeleteSubCategory(SubCategory SubCategory)
+        public void DeleteSubCategory(SubCategory subCategory)
         {
-            _db.Entry(SubCategory).State = EntityState.Deleted;
+            _db.Entry(subCategory).State = EntityState.Deleted;
         }
     }
 }
