@@ -1,8 +1,11 @@
-﻿namespace Core.Domain.Entity.Products
+﻿using Core.Domain.Entity.Categories;
+using Core.Domain.Entity.CategoriesAndProducts;
+
+namespace Core.Domain.Entity.Products
 {
     public class ProductProperty
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
         public double DiscountPrice { get; set; }
@@ -24,8 +27,8 @@
         public string Graphics { get; set; }
         public string Processor { get; set; }
         public string RAM { get; set; }
-        public bool IsExist { get; set; }
-        public Guid CreatorId { get; set; }
+        public Guid UserCreatorId { get; set; }
+        public List<CategoryProductProperty> CategoryProductProperties { get; set; }      
 
     }
 }

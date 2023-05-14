@@ -3,8 +3,11 @@
 @Html.AntiForgeryToken()
 <h1>دسته اصلی ها</h1>
 <div class="row">
-    <div class="col-3">
+    <div class="col-9">
         <a asp-controller="MainCategory" asp-action="CreateMainCategory">ساخت دسته اصلی</a>
+    </div>
+    <div class="col-3">
+        <a asp-controller="Home" asp-action="Index">صفحه ادمین</a>
     </div>
 </div>
 <br />

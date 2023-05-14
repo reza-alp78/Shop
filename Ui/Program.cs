@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Ui.Mappings;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
 //connect to database
 builder.Services.AddDbContext<ShopDbContext>(options =>
@@ -60,7 +61,7 @@ foreach (var typeToRegister in typesToRegistery)
 }
 
 builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+
 builder.Services.AddMvc();
 
 var app = builder.Build();
@@ -81,5 +82,4 @@ app.MapControllerRoute(
    name: "default",
    pattern: "{controller=Account}/{action=Login}/{id?}"
    );
-
 app.Run();

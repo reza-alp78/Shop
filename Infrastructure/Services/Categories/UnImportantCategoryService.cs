@@ -67,6 +67,6 @@ namespace Infrastructure.Services.Categories
         {
             _db.Entry(unImportantCategory).State = EntityState.Deleted;
         }
-
+        
     }
 }

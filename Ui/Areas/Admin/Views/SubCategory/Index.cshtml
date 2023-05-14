@@ -26,6 +26,9 @@
         <div class="col-2">
             <a asp-controller="UnImportantCategory" asp-action="Index" asp-route-subCategoryId="@item.Id">دسته فرعی</a>
         </div>
+        <div class="col-2">
+            <a asp-controller="Product" asp-action="ChoiesPropertyUpdateOrAddSubCategory" asp-route-subCategoryId="@item.Id">خصوصیت</a>
+        </div>
     </div>
     <br />
 }

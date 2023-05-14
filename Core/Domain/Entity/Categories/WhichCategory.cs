@@ -1,4 +1,5 @@
-﻿using Core.Domain.Entity.Products;
+﻿using Core.Domain.Entity.CategoriesAndProducts;
+using Core.Domain.Entity.Products;
 
 namespace Core.Domain.Entity.Categories
 {
@@ -11,5 +12,6 @@ namespace Core.Domain.Entity.Categories
         public int UnImportantCategoryId { get; set; }
 
         public List<Product> Products { get; set; }
+        public List<CategoryProductProperty> CategoryProductProperties { get; set; }
     }
 }

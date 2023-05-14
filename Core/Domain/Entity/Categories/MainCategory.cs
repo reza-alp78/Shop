@@ -1,4 +1,6 @@
-﻿namespace Core.Domain.Entity.Categories
+﻿using Core.Domain.Entity.Products;
+
+namespace Core.Domain.Entity.Categories
 {
     public class MainCategory
     {

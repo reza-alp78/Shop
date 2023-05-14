@@ -1,0 +1,108 @@
+﻿@model Core.ViewModel.Products.ProductPropertyViewModel
+
+<span>ویرایش ویژگی محصول برای زیردسته</span>
+<form asp-area="Admin" asp-controller="Product" asp-action="UpdateChoiesPropertySubCategory" method="post" role="form">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <div class="row">
+        <div class="col-2">
+            <label asp-for="Name"></label>
+            <input type="checkbox" checked disabled />
+        </div>
+        <div class="col-2">
+            <label asp-for="Price"></label>
+            <input type="checkbox" checked disabled />
+        </div>
+        <div class="col-2">
+            <label asp-for="Rate"></label>
+            <input type="checkbox" checked disabled />
+        </div>
+        <div class="col-2">
+            <label asp-for="Description"></label>
+            <input type="checkbox" checked disabled />
+        </div>
+        <div class="col-2">
+            <label asp-for="DiscountPrice"></label>
+            <input type="checkbox" checked disabled />
+        </div>
+        <div class="col-2">
+            <label asp-for="Discount"></label>
+            <input type="checkbox" checked disabled />
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-1">
+            <label asp-for="Existance"></label>
+            <input type="checkbox" asp-for="Existance" />
+        </div>
+        <div class="col-3">
+            <label asp-for="IsAlwaysValid"></label>
+            <input type="checkbox" asp-for="IsAlwaysValid" />
+        </div>
+        <div class="col-2">
+            <label asp-for="Color"></label>
+            <input type="checkbox" asp-for="Color" />
+        </div>
+        <div class="col-2">
+            <label asp-for="Size"></label>
+            <input type="checkbox" asp-for="Size" />
+        </div>
+        <div class="col-2">
+            <label asp-for="Country"></label>
+            <input type="checkbox" asp-for="Country" />
+        </div>
+        <div class="col-2">
+            <label asp-for="Model"></label>
+            <input type="checkbox" asp-for="Model" />
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-2">
+            <label asp-for="Brand"></label>
+            <input type="checkbox" asp-for="Brand" />
+        </div>
+        <div class="col-2">
+            <label asp-for="Gender"></label>
+            <input type="checkbox" asp-for="Gender" />
+        </div>
+        <div class="col-2">
+            <label asp-for="Weight"></label>
+            <input type="checkbox" asp-for="Weight" />
+        </div>
+        <div class="col-2">
+            <label asp-for="Lenght"></label>
+            <input type="checkbox" asp-for="Lenght" />
+        </div>
+        <div class="col-2">
+            <label asp-for="Wide"></label>
+            <input type="checkbox" asp-for="Wide" />
+        </div>
+        <div class="col-2">
+            <label asp-for="Height"></label>
+            <input type="checkbox" asp-for="Height" />
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-2">
+            <label asp-for="Graphics"></label>
+            <input type="checkbox" asp-for="Graphics" />
+        </div>
+        <div class="col-2">
+            <label asp-for="Processor"></label>
+            <input type="checkbox" asp-for="Processor" />
+        </div>
+        <div class="col-2">
+            <label asp-for="RAM"></label>
+            <input type="checkbox" asp-for="RAM" />
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-12">
+            <button type="submit">ویرایش</button>
+        </div>
+    </div>
+</form>

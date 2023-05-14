@@ -6,25 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialModels : Migration
+    public partial class FixRelashionTableCategorysAndProducts : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "CategoryProductProperties",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    WhichCategoryId = table.Column<int>(type: "int", nullable: false),
-                    ProductPropertyId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CategoryProductProperties", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Drivers",
                 columns: table => new
@@ -72,7 +58,7 @@ namespace Infrastructure.Migrations
                 name: "ProductProperties",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<double>(type: "float", nullable: false),
@@ -95,8 +81,7 @@ namespace Infrastructure.Migrations
                     Graphics = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Processor = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RAM = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsExist = table.Column<bool>(type: "bit", nullable: false),
-                    CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    UserCreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -191,6 +176,52 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CategoryProductProperties",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    WhichCategoryId = table.Column<int>(type: "int", nullable: false),
+                    ProductPropertyId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CategoryProductProperties", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CategoryProductProperties_ProductProperties_ProductPropertyId",
+                        column: x => x.ProductPropertyId,
+                        principalTable: "ProductProperties",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CategoryProductProperties_WhichCategories_WhichCategoryId",
+                        column: x => x.WhichCategoryId,
+                        principalTable: "WhichCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SubCategories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SubCategoryName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubCategories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SubCategories_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
@@ -254,26 +285,6 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SubCategories",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SubCategoryName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CategoryId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SubCategories", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_SubCategories_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "UnImportantCategories",
                 columns: table => new
                 {
@@ -312,6 +323,16 @@ namespace Infrastructure.Migrations
                 name: "IX_Categories_MainCategoryId",
                 table: "Categories",
                 column: "MainCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CategoryProductProperties_ProductPropertyId",
+                table: "CategoryProductProperties",
+                column: "ProductPropertyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CategoryProductProperties_WhichCategoryId",
+                table: "CategoryProductProperties",
+                column: "WhichCategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_ApplicationUserId",
@@ -356,9 +377,6 @@ namespace Infrastructure.Migrations
                 name: "Buys");
 
             migrationBuilder.DropTable(
-                name: "ProductProperties");
-
-            migrationBuilder.DropTable(
                 name: "Products");
 
             migrationBuilder.DropTable(
@@ -377,10 +395,13 @@ namespace Infrastructure.Migrations
                 name: "Images");
 
             migrationBuilder.DropTable(
-                name: "WhichCategories");
+                name: "SubCategories");
 
             migrationBuilder.DropTable(
-                name: "SubCategories");
+                name: "ProductProperties");
+
+            migrationBuilder.DropTable(
+                name: "WhichCategories");
 
             migrationBuilder.DropTable(
                 name: "Categories");

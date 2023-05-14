@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ShopDbContext))]
-    [Migration("20230510110643_InitialModels")]
-    partial class InitialModels
+    [Migration("20230513102807_FixRelashionTableCategorysAndProducts")]
+    partial class FixRelashionTableCategorysAndProducts
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -144,6 +144,10 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductPropertyId");
+
+                    b.HasIndex("WhichCategoryId");
 
                     b.ToTable("CategoryProductProperties");
                 });
@@ -357,11 +361,11 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Domain.Entity.Products.ProductProperty", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Brand")
                         .HasColumnType("nvarchar(max)");
@@ -371,9 +375,6 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Country")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("CreatorId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -399,9 +400,6 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("IsAlwaysValid")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsExist")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Lenght")
                         .HasColumnType("nvarchar(max)");
 
@@ -425,6 +423,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Size")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserCreatorId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Weight")
                         .HasColumnType("nvarchar(max)");
@@ -688,6 +689,25 @@ namespace Infrastructure.Migrations
                     b.Navigation("SubCategory");
                 });
 
+            modelBuilder.Entity("Core.Domain.Entity.CategoriesAndProducts.CategoryProductProperty", b =>
+                {
+                    b.HasOne("Core.Domain.Entity.Products.ProductProperty", "ProductProperty")
+                        .WithMany("CategoryProductProperties")
+                        .HasForeignKey("ProductPropertyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Domain.Entity.Categories.WhichCategory", "WhichCategory")
+                        .WithMany("CategoryProductProperties")
+                        .HasForeignKey("WhichCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProductProperty");
+
+                    b.Navigation("WhichCategory");
+                });
+
             modelBuilder.Entity("Core.Domain.Entity.Products.Buy", b =>
                 {
                     b.HasOne("Core.IdentityEntity.ApplicationUser", "ApplicationUser")
@@ -806,6 +826,8 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Domain.Entity.Categories.WhichCategory", b =>
                 {
+                    b.Navigation("CategoryProductProperties");
+
                     b.Navigation("Products");
                 });
 
@@ -822,6 +844,11 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.Domain.Entity.Products.Images", b =>
                 {
                     b.Navigation("products");
+                });
+
+            modelBuilder.Entity("Core.Domain.Entity.Products.ProductProperty", b =>
+                {
+                    b.Navigation("CategoryProductProperties");
                 });
 
             modelBuilder.Entity("Core.IdentityEntity.ApplicationUser", b =>

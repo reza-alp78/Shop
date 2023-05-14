@@ -66,6 +66,8 @@ namespace UI.Controllers
             TempData["Message"] = Extension.AlertSuccess();
             HttpContext.Session.SetString(ConfirmCode, "");
             HttpContext.Session.SetString(Email, "");
+            var user = await _userManager.FindByEmailAsync(loginViewModel.Email);
+            HttpContext.Session.SetString("UserGuid", user.Id.ToString());
             return RedirectToAction("Index", "Home", new { area = "" });
         }
 
