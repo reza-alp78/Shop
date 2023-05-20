@@ -10,6 +10,5 @@ namespace Core.Domain.Entity.DriverRegister
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
 
-        public List<Product> Products { get; set; }
     }
 }

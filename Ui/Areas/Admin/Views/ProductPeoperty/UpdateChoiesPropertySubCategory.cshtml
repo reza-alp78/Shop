@@ -1,8 +1,9 @@
 ﻿@model Core.ViewModel.Products.ProductPropertyViewModel
 
-<span>تعریف ویژگی محصول برای دسته فرعی</span>
-<form asp-area="Admin" asp-controller="Product" asp-action="ChoiesPropertyUnImportantCategory" method="post" role="form">
+<span>ویرایش ویژگی محصول برای زیردسته</span>
+<form asp-area="Admin" asp-controller="ProductPeoperty" asp-action="UpdateChoiesPropertySubCategory" method="post" role="form">
     @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
     <div class="row">
         <div class="col-2">
             <label asp-for="Name"></label>
@@ -27,7 +28,7 @@
         <div class="col-2">
             <label asp-for="Discount"></label>
             <input type="checkbox" checked disabled />
-        </div>      
+        </div>
     </div>
     <br />
     <div class="row">
@@ -37,7 +38,7 @@
         </div>
         <div class="col-3">
             <label asp-for="IsAlwaysValid"></label>
-            <input type="checkbox" asp-for="IsAlwaysValid" checked />
+            <input type="checkbox" asp-for="IsAlwaysValid" />
         </div>
         <div class="col-2">
             <label asp-for="Color"></label>
@@ -101,7 +102,7 @@
     <br />
     <div class="row">
         <div class="col-12">
-            <button type="submit">ایجاد</button>
+            <button type="submit">ویرایش</button>
         </div>
     </div>
 </form>

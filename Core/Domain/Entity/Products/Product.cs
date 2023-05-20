@@ -5,28 +5,27 @@ namespace Core.Domain.Entity.Products
     public class Product
     {
         public long Id { get; set; }
-        public bool Name { get; set; }
-        public bool Price { get; set; }
-        public bool DiscountPrice { get; set; }
-        public bool Discount { get; set; }
-        public bool Existance { get; set; }
+        public string Name { get; set; }
+        public double Price { get; set; }
+        public double DiscountPrice { get; set; }
+        public double Discount { get; set; }
+        public int Existance { get; set; }
         public bool IsAlwaysValid { get; set; }
-        public bool Rate { get; set; }
-        public bool Description { get; set; }
-        public bool Color { get; set; }
-        public bool Size { get; set; }
-        public bool Country { get; set; }
-        public bool Model { get; set; }
-        public bool Brand { get; set; }
-        public bool Gender { get; set; }
-        public bool Weight { get; set; }
-        public bool Lenght { get; set; }
-        public bool Wide { get; set; }
-        public bool Height { get; set; }
-        public bool Graphics { get; set; }
-        public bool Processor { get; set; }
-        public bool RAM { get; set; }
-
-        public CategoryProductProperty CategoryProductProperty { get; set; }
+        public double Rate { get; set; }
+        public string Description { get; set; }
+        public string Color { get; set; }
+        public string Size { get; set; }
+        public string Country { get; set; }
+        public string Model { get; set; }
+        public string Brand { get; set; }
+        public string Gender { get; set; }
+        public string Weight { get; set; }
+        public string Lenght { get; set; }
+        public string Wide { get; set; }
+        public string Height { get; set; }
+        public string Graphics { get; set; }
+        public string Processor { get; set; }
+        public string RAM { get; set; }
+        public Guid UserCreatorId { get; set; }        
     }
 }

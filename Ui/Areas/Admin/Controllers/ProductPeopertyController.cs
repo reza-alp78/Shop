@@ -16,7 +16,7 @@ using Ui.HandShort;
 namespace Ui.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class ProductController : Controller
+    public class ProductPeopertyController : Controller
     {
 
         #region Constructor
@@ -27,7 +27,7 @@ namespace Ui.Areas.Admin.Controllers
         private readonly ISaveChangesAsync _saveChangesAsync;
         private readonly IMapper _mapper;
 
-        public ProductController(IProductProperty productProperty, IWhichCategory whichCategory, ICategoryProductProperty categoryProductProperty, ISaveChangesAsync saveChangesAsync, IMapper mapper)
+        public ProductPeopertyController(IProductProperty productProperty, IWhichCategory whichCategory, ICategoryProductProperty categoryProductProperty, ISaveChangesAsync saveChangesAsync, IMapper mapper)
         {
             _productProperty = productProperty;
             _whichCategory = whichCategory;

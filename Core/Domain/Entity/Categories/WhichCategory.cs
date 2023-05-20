@@ -10,8 +10,6 @@ namespace Core.Domain.Entity.Categories
         public int CategoryId { get; set; }
         public int SubCategoryId { get; set; }
         public int UnImportantCategoryId { get; set; }
-
-        public List<Product> Products { get; set; }
         public List<CategoryProductProperty> CategoryProductProperties { get; set; }
     }
 }

@@ -10,6 +10,7 @@ namespace Infrastructure.Services.Poducts
 {
     public class ProductPropertService : IProductProperty
     {
+
         #region constructor
 
         private readonly ShopDbContext _db;
@@ -20,6 +21,8 @@ namespace Infrastructure.Services.Poducts
             _db = shopDbContext;
             _dapper = context;
         }
+
+        #endregion
 
         public async Task<ProductProperty> AddProductProperty(ProductProperty productProperty)
         {
@@ -45,10 +48,7 @@ namespace Infrastructure.Services.Poducts
         public void DeleteProductProperty(ProductProperty productProperty)
         {
             _db.Entry(productProperty).State = EntityState.Deleted;
-        }      
-
-        #endregion
-
+        }     
 
     }
 }

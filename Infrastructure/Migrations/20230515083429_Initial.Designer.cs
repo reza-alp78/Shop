@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ShopDbContext))]
-    [Migration("20230513102807_FixRelashionTableCategorysAndProducts")]
-    partial class FixRelashionTableCategorysAndProducts
+    [Migration("20230515083429_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -160,13 +160,18 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<int>("CategoryProductPropertyId")
+                        .HasColumnType("int");
+
                     b.Property<long>("ProductId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("WhichCategoryId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryProductPropertyId");
+
+                    b.HasIndex("ProductId")
+                        .IsUnique();
 
                     b.ToTable("ProductRegisters");
                 });
@@ -269,104 +274,6 @@ namespace Infrastructure.Migrations
                     b.Property<Guid?>("ApplicationUserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("Brand")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("CategoryProductPropertyId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Color")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Country")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Description")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Discount")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("DiscountPrice")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("DriverId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Existance")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Gender")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Graphics")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Height")
-                        .HasColumnType("bit");
-
-                    b.Property<long?>("ImagesId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("IsAlwaysValid")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Lenght")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Model")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Name")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Price")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Processor")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("RAM")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Rate")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Size")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Weight")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("WhichCategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Wide")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("CategoryProductPropertyId");
-
-                    b.HasIndex("DriverId");
-
-                    b.HasIndex("ImagesId");
-
-                    b.HasIndex("WhichCategoryId");
-
-                    b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("Core.Domain.Entity.Products.ProductProperty", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<string>("Brand")
                         .HasColumnType("nvarchar(max)");
 
@@ -385,6 +292,9 @@ namespace Infrastructure.Migrations
                     b.Property<double>("DiscountPrice")
                         .HasColumnType("float");
 
+                    b.Property<int?>("DriverId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Existance")
                         .HasColumnType("int");
 
@@ -396,6 +306,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Height")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("ImagesId")
+                        .HasColumnType("bigint");
 
                     b.Property<bool>("IsAlwaysValid")
                         .HasColumnType("bit");
@@ -430,8 +343,98 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Weight")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("WhichCategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Wide")
                         .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("DriverId");
+
+                    b.HasIndex("ImagesId");
+
+                    b.HasIndex("WhichCategoryId");
+
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("Core.Domain.Entity.Products.ProductProperty", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Brand")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Color")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Country")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Description")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Discount")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("DiscountPrice")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Existance")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Gender")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Graphics")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Height")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsAlwaysValid")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Lenght")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Model")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Name")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Price")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Processor")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("RAM")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Rate")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Size")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("UserCreatorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Weight")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Wide")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -708,6 +711,25 @@ namespace Infrastructure.Migrations
                     b.Navigation("WhichCategory");
                 });
 
+            modelBuilder.Entity("Core.Domain.Entity.CategoriesAndProducts.ProductRegister", b =>
+                {
+                    b.HasOne("Core.Domain.Entity.CategoriesAndProducts.CategoryProductProperty", "CategoryProductProperty")
+                        .WithMany("ProductRegisters")
+                        .HasForeignKey("CategoryProductPropertyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Domain.Entity.Products.Product", "Product")
+                        .WithOne("ProductRegister")
+                        .HasForeignKey("Core.Domain.Entity.CategoriesAndProducts.ProductRegister", "ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CategoryProductProperty");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Core.Domain.Entity.Products.Buy", b =>
                 {
                     b.HasOne("Core.IdentityEntity.ApplicationUser", "ApplicationUser")
@@ -739,10 +761,6 @@ namespace Infrastructure.Migrations
                         .WithMany("Products")
                         .HasForeignKey("ApplicationUserId");
 
-                    b.HasOne("Core.Domain.Entity.CategoriesAndProducts.CategoryProductProperty", "CategoryProductProperty")
-                        .WithMany()
-                        .HasForeignKey("CategoryProductPropertyId");
-
                     b.HasOne("Core.Domain.Entity.DriverRegister.Driver", null)
                         .WithMany("Products")
                         .HasForeignKey("DriverId");
@@ -754,8 +772,6 @@ namespace Infrastructure.Migrations
                     b.HasOne("Core.Domain.Entity.Categories.WhichCategory", null)
                         .WithMany("Products")
                         .HasForeignKey("WhichCategoryId");
-
-                    b.Navigation("CategoryProductProperty");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -831,6 +847,11 @@ namespace Infrastructure.Migrations
                     b.Navigation("Products");
                 });
 
+            modelBuilder.Entity("Core.Domain.Entity.CategoriesAndProducts.CategoryProductProperty", b =>
+                {
+                    b.Navigation("ProductRegisters");
+                });
+
             modelBuilder.Entity("Core.Domain.Entity.CategoriesAndProducts.ProductRegister", b =>
                 {
                     b.Navigation("Buys");
@@ -844,6 +865,11 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.Domain.Entity.Products.Images", b =>
                 {
                     b.Navigation("products");
+                });
+
+            modelBuilder.Entity("Core.Domain.Entity.Products.Product", b =>
+                {
+                    b.Navigation("ProductRegister");
                 });
 
             modelBuilder.Entity("Core.Domain.Entity.Products.ProductProperty", b =>

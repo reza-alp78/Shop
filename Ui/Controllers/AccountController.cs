@@ -150,7 +150,7 @@ namespace UI.Controllers
             }
             catch (Exception)
             {
-                TempData["Message"] = Extension.AlertUnKnown();
+                TempData["Message"] = "خطا در ارسال ایمیل";
             }
         }
 

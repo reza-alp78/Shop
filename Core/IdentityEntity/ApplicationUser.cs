@@ -13,6 +13,5 @@ namespace Core.IdentityEntity
         public int ZipCode { get; set; }
         public string Description { get; set; }
 
-        public List<Product> Products { get; set; }
     }
 }

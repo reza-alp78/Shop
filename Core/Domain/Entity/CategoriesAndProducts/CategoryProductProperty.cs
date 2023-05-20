@@ -10,5 +10,6 @@ namespace Core.Domain.Entity.CategoriesAndProducts
         public WhichCategory WhichCategory { get; set; }
         public int ProductPropertyId { get; set; }
         public ProductProperty ProductProperty { get; set; }
+        public List<ProductRegister> ProductRegisters { get; set; }
     }
 }
