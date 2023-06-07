@@ -9,6 +9,7 @@ namespace Infrastructure.Services.CategoriesAndProducts
 {
     public class CategoryProductPropertyService : ICategoryProductProperty
     {
+
         #region constructor
 
         private readonly ShopDbContext _db;

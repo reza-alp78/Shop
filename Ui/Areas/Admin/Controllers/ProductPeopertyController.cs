@@ -38,8 +38,6 @@ namespace Ui.Areas.Admin.Controllers
 
         #endregion
 
-        #region ChoiseProperties
-
         #region Selected Is Update or Create
 
         [HttpGet]
@@ -267,9 +265,6 @@ namespace Ui.Areas.Admin.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
-
-        #endregion
-
 
         #endregion
 

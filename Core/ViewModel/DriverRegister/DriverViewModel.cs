@@ -2,7 +2,7 @@
 
 namespace Core.ViewModel.DriverRegister
 {
-    public class DriverViewMolde
+    public class DriverViewModel
     {
         public int Id { get; set; }
         public string Name { get; set; }

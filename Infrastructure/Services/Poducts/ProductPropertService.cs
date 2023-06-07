@@ -1,9 +1,7 @@
-﻿using Core.Domain.Entity.Categories;
-using Core.Domain.Entity.Products;
+﻿using Core.Domain.Entity.Products;
 using Dapper;
 using Infrastructure.DataBaseContext;
 using Infrastructure.Interfaces.Products;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Services.Poducts

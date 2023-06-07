@@ -16,7 +16,7 @@ namespace Core.ViewModel.Products
         public long ConsignmentNumber { get; set; }
         public DateTime DateTime { get; set; }
 
-        public DriverViewMolde DriverViewMolde { get; set; }
+        public DriverViewModel DriverViewMolde { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
         public ProductRegisterViewModel ProductRegisterViewModel { get; set; }
     }

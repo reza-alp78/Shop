@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using Core.Domain.Entity.Products;
+using Core.ViewModel.Products;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Ui.HandShort
 {

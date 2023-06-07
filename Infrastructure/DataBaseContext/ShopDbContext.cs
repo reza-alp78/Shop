@@ -28,6 +28,7 @@ namespace Infrastructure.DataBaseContext
         public DbSet<Images> Images { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductProperty> ProductProperties { get; set; }
+        public DbSet<ProductRateAndComment> ProductRateAndComments { get; set; }
 
         #endregion
 

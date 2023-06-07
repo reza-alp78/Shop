@@ -9,9 +9,9 @@ namespace Core.Domain.Entity.Products
         public double Price { get; set; }
         public double DiscountPrice { get; set; }
         public double Discount { get; set; }
-        public int Existance { get; set; }
+        public string Existance { get; set; }
         public bool IsAlwaysValid { get; set; }
-        public double Rate { get; set; }
+        public string Rate { get; set; }
         public string Description { get; set; }
         public string Color { get; set; }
         public string Size { get; set; }

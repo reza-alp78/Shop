@@ -1,4 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 
 namespace Core.ViewModel.Products
 {
@@ -47,7 +50,30 @@ namespace Core.ViewModel.Products
         public bool Processor { get; set; }
         [Display(Name = "رم")]
         public bool RAM { get; set; }
+
+        public string NameProduct { get; set; }
+        public double PriceProduct { get; set; }
+        public double DiscountPriceProduct { get; set; }
+        public double DiscountProduct { get; set; }
+        public string ExistanceProduct { get; set; }
+        public double RateProduct { get; set; }
+        public string DescriptionProduct { get; set; }
+        public string ColorProduct { get; set; }
+        public string SizeProduct { get; set; }
+        public string CountryProduct { get; set; }
+        public string ModelProduct { get; set; }
+        public string BrandProduct { get; set; }
+        public string GenderProduct { get; set; }
+        public string WeightProduct { get; set; }
+        public string LenghtProduct { get; set; }
+        public string WideProduct { get; set; }
+        public string HeightProduct { get; set; }
+        public string GraphicsProduct { get; set; }
+        public string ProcessorProduct { get; set; }
+        public string RAMProduct { get; set; }
+
         public Guid UserCreatorId { get; set; }
+        public List<byte[]> Images { get; set; }
 
     }
 }

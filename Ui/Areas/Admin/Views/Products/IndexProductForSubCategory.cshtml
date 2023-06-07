@@ -1,0 +1,28 @@
+﻿@model List<Core.ViewModel.Products.ProductViewModel>
+
+@Html.AntiForgeryToken()
+<h1>محصولات</h1>
+<div class="row">
+    <div class="col-9">
+        <a asp-controller="Products" asp-action="AddProductForSubCategory">ساخت محصول</a>
+    </div>
+    <div class="col-3">
+        <a asp-controller="SubCategory" asp-action="Index">بازگشت به زیردسته</a>
+    </div>
+</div>
+<br />
+@foreach (var item in Model)
+{
+    <div class="row">
+        <div class="col-3">
+            <label>@item.Name , @item.Price</label>
+        </div>
+        <div class="col-1">
+            <a asp-controller="Products" asp-action="UpdateProductForSubCategory" asp-route-id="@item.Id">ویرایش</a>
+        </div>
+        <div class="col-1">
+            <a asp-controller="Products" asp-action="DeleteProductSubCategory" asp-route-id="@item.Id">حذف</a>
+        </div>
+    </div>
+    <br />
+}

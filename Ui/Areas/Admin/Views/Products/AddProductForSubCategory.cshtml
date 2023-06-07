@@ -1,0 +1,149 @@
+﻿@model Core.ViewModel.Products.ProductPropertyViewModel
+
+<span>اضافه کردن محصول</span>
+<form asp-area="Admin" asp-controller="Products" asp-action="AddProductForSubCategory" enctype="multipart/form-data" method="post" role="form">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="UserCreatorId" />
+    <div class="row">
+        <div class="col-4">
+            <label asp-for="Name"></label>
+            <input type="text" asp-for="NameProduct" />
+        </div>
+        <div class="col-4">
+            <label asp-for="Price"></label>
+            <input type="text" placeholder="قیمت به تومان" pattern="^[0-9]*(?:\.[0-9]*)?$" asp-for="PriceProduct" />
+        </div>
+        <div class="col-4">
+            <label asp-for="DiscountPrice"></label>
+            <input type="text" placeholder="قیمت به تومان" pattern="^[0-9]*(?:\.[0-9]*)?$" asp-for="DiscountPriceProduct" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8">
+            <label asp-for="Description"></label>
+            <textarea asp-for="DescriptionProduct"></textarea>
+        </div>
+        <div class="col-4">
+            <label>تصویر</label>
+            <input type="file" asp-for="Images" multiple />
+        </div>
+    </div>
+    <div class="row">
+        @if (Model.Existance)
+        {
+            <div class="col-4">
+                <label asp-for="Existance"></label>
+                <input type="number" asp-for="ExistanceProduct" />
+            </div>
+        }
+        else
+        {
+            <div class="col-4">
+                <label asp-for="IsAlwaysValid"></label>
+                <input type="checkbox" asp-for="IsAlwaysValid" />
+            </div>
+        }
+        @if (Model.Color)
+        {
+            <div class="col-4">
+                <label asp-for="Color"></label>
+                <input type="text" asp-for="ColorProduct" />
+            </div>
+        }
+        @if (Model.Size)
+        {
+            <div class="col-4">
+                <label asp-for="Size"></label>
+                <input type="text" asp-for="SizeProduct" />
+            </div>
+        }
+        @if (Model.Country)
+        {
+            <div class="col-4">
+                <label asp-for="Country"></label>
+                <input type="text" asp-for="CountryProduct" />
+            </div>
+        }
+        @if (Model.Model)
+        {
+            <div class="col-4">
+                <label asp-for="Model"></label>
+                <input type="text" asp-for="ModelProduct" />
+            </div>
+        }
+        @if (Model.Brand)
+        {
+            <div class="col-4">
+                <label asp-for="Brand"></label>
+                <input type="text" asp-for="BrandProduct" />
+            </div>
+        }
+        @if (Model.Gender)
+        {
+            <div class="col-4">
+                <label asp-for="Gender"></label>
+                <input type="text" asp-for="GenderProduct" />
+            </div>
+        }
+        @if (Model.Weight)
+        {
+            <div class="col-4">
+                <label asp-for="Weight"></label>
+                <input type="text" asp-for="WeightProduct" />
+            </div>
+        }
+        @if (Model.Lenght)
+        {
+            <div class="col-4">
+                <label asp-for="Lenght"></label>
+                <input type="text" asp-for="LenghtProduct" />
+            </div>
+        }
+        @if (Model.Wide)
+        {
+            <div class="col-4">
+                <label asp-for="Wide"></label>
+                <input type="text" asp-for="WideProduct" />
+            </div>
+        }
+        @if (Model.Height)
+        {
+            <div class="col-4">
+                <label asp-for="Height"></label>
+                <input type="text" asp-for="HeightProduct" />
+            </div>
+        }
+        @if (Model.Graphics)
+        {
+            <div class="col-4">
+                <label asp-for="Graphics"></label>
+                <input type="text" asp-for="GraphicsProduct" />
+            </div>
+        }
+        @if (Model.Processor)
+        {
+            <div class="col-4">
+                <label asp-for="Processor"></label>
+                <input type="text" asp-for="ProcessorProduct" />
+            </div>
+        }
+        @if (Model.RAM)
+        {
+            <div class="col-4">
+                <label asp-for="RAM"></label>
+                <input type="text" asp-for="RAMProduct" />
+            </div>
+        }
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <button type="submit">ایجاد</button>
+        </div>
+    </div>
+</form>
+<br />
+<div class="row">
+    <div class="col-4">
+        <a asp-controller="Products" asp-action="IndexProductForSubCategory">بازیگشت</a>
+    </div>
+</div>
