@@ -1,0 +1,42 @@
+﻿@model Core.ViewModel.DriverRegister.DriverViewModel
+
+<span>ویرایش کردن راننده</span>
+<form asp-area="Admin" asp-controller="Driver" asp-action="UpdateDriver" method="post" role="form">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <div class="row">
+        <div class="col-4">
+            <label asp-for="Name"></label>
+            <input type="text" asp-for="Name" />
+            <span class="text-danger" asp-validation-for="Name"></span>
+        </div>
+        <div class="col-4">
+            <label asp-for="NationalCode"></label>
+            <input type="text" asp-for="NationalCode" />
+            <span class="text-danger" asp-validation-for="NationalCode"></span>
+        </div>
+        <div class="col-4">
+            <label asp-for="PhoneNumber"></label>
+            <input type="text" asp-for="PhoneNumber" />
+            <span class="text-danger" asp-validation-for="PhoneNumber"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <label asp-for="Address"></label>
+            <textarea asp-for="Address"></textarea>
+            <span class="text-danger" asp-validation-for="Address"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <button type="submit">ویرایش</button>
+        </div>
+    </div>
+</form>
+<br />
+<div class="row">
+    <div class="col-4">
+        <a asp-controller="Driver" asp-action="Index">بازگشت</a>
+    </div>
+</div>
