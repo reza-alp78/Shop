@@ -1,4 +1,5 @@
 ﻿using Core.Domain.Entity.CategoriesAndProducts;
+using Core.Domain.Entity.Products;
 using Dapper;
 using Infrastructure.DataBaseContext;
 using Infrastructure.Interfaces.CategoriesAndProducts;
@@ -26,6 +27,16 @@ namespace Infrastructure.Services.CategoriesAndProducts
         }
 
         #endregion
+
+        public async Task<List<Product>> GetAllProductsByWhichCategoryId(int whichCategoryId)
+        {
+            var query = $"SELECT P.* From Products P INNER JOIN ProductRegisters PR ON P.id = PR.ProductId WHERE PR.CategoryProductPropertyId = {whichCategoryId}";
+            using (var connection = _dapper.CreateConnection())
+            {
+                var products = await connection.QueryAsync<Product>(query);
+                return products.ToList();
+            }
+        }
 
         public async Task<ProductRegister> AddProductRegister(ProductRegister productRegister)
         {

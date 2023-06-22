@@ -1,0 +1,39 @@
+﻿@model List<Ui.Areas.User.Model.AllCategories>
+
+@Html.AntiForgeryToken()
+<h1>دسته بندی ها</h1>
+<br />
+@foreach (var item in Model)
+{
+    <div class="row">
+        <div class="col-3">
+            @item.MainCategoryName
+        </div>
+        <div class="col-3">
+            @item.CategoryName
+        </div>
+        <div class="col-3">
+            <a asp-controller="Home" asp-action="Product"
+               asp-route-mainCategoryId="@item.MainCategoryId" asp-route-categoryId="@item.CategoryId"
+               asp-route-subCategoryId="@item.SubCategoryId">
+                @item.SubCategoryName
+            </a>
+        </div>
+        @if (!string.IsNullOrEmpty(item.UnImportantCategoryName))
+        {
+            <div class="col-3">
+                <a asp-controller="Home" asp-action="Product"
+                   asp-route-mainCategoryId="@item.MainCategoryId" asp-route-categoryId="@item.CategoryId"
+                   asp-route-subCategoryId="@item.SubCategoryId" asp-route-unImportantCategoryId="@item.UnImportantCategoryId">
+                    @item.SubCategoryName
+                </a>
+            </div>
+        }
+    </div>
+    <br />
+}
+<div class="row">
+    <div class="col-3">
+        <a asp-area="" asp-controller="Home" asp-action="Index">بازگشت</a>
+    </div>
+</div>

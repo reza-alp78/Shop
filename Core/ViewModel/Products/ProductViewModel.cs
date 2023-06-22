@@ -52,6 +52,9 @@ namespace Core.ViewModel.Products
 
         public Guid UserCreatorId { get; set; }
         public List<byte[]> Images { get; set; }
+        public string ImageString { get; set; }
+        public List<string> ImagesStrings { get; set; } = new List<string>();
+        
         public WhichCategoryViewModel WhichCategoryViewModel { get; set; }
     }
 }

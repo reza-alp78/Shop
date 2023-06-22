@@ -1,0 +1,258 @@
+﻿@model Core.ViewModel.Products.ProductViewModel
+
+<style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+    img {
+        vertical-align: middle;
+    }
+
+    /* Position the image container (needed to position the left and right arrows) */
+    .container {
+        position: relative;
+    }
+
+    /* Hide the images by default */
+    .mySlides {
+        display: none;
+    }
+
+    /* Add a pointer when hovering over the thumbnail images */
+    .cursor {
+        cursor: pointer;
+    }
+
+    /* Next & previous buttons */
+    .prev {
+        cursor: pointer;
+        position: absolute;
+        top: 40%;
+        left: -25px;
+        width: auto;
+        padding: 10px;
+        margin-top: -50px;
+        color: white;
+        font-weight: bold;
+        font-size: 20px;
+        user-select: none;
+        -webkit-user-select: none;
+        background-color: gray;
+    }
+
+    .next {
+        cursor: pointer;
+        position: absolute;
+        top: 40%;
+        width: auto;
+        padding: 10px;
+        margin-top: -50px;
+        color: white;
+        font-weight: bold;
+        font-size: 20px;
+        user-select: none;
+        -webkit-user-select: none;
+        right: -25px;
+        background-color: gray;
+    }
+
+        /* On hover, add a black background color with a little bit see-through */
+        .prev:hover,
+        .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+    /* Number text (1/3 etc) */
+    .numbertext {
+        color: #f2f2f2;
+        font-size: 12px;
+        padding: 8px 12px;
+        position: absolute;
+        top: 0;
+    }
+
+    /* Container for image text */
+    .caption-container {
+        text-align: center;
+        background-color: #222;
+        padding: 1px 16px;
+        color: white;
+    }
+
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    /* Six columns side by side */
+    .column {
+        float: left;
+        width: 16.66%;
+    }
+
+    /* Add a transparency effect for thumnbail images */
+    .demo {
+        opacity: 0.2;
+    }
+
+        .active,
+        .demo:hover {
+            opacity: 1;
+        }
+</style>
+@*عکسا به صورت گالری نمایش داده شود*@
+<div class="container mt-1">
+    @for (int i = 0; i < Model.ImagesStrings.Count(); i++)
+    {
+        <div class="mySlides">
+            <div class="numbertext">@(i+1) / @Model.ImagesStrings.Count()</div>
+        <img src="@Model.ImagesStrings[i]" style="width:100%;height:500px">
+    </div>
+    }
+
+    <a class="prev" onclick="plusSlides(1)">❯</a>
+    <a class="next" onclick="plusSlides(-1)">❮</a>
+
+    <div class="caption-container">
+        <p id="caption"></p>
+    </div>
+
+    <div class="row">
+        @for (int i = 0; i < Model.ImagesStrings.Count(); i++)
+        {
+            <div class="column">
+                <img class="demo cursor" src="@Model.ImagesStrings[i]" style="width:100%;height:100px" onclick="currentSlide(@i++)" alt="@Model.Name">
+            </div>
+        }
+    </div>
+</div>
+@*
+<div class="row">
+    <div class="col-3">
+        <img style="width:300px;height:120px;border-radius:15px;border:2px solid #000000" class="imgStyle" src="@Model.ImageString" alt="@Model.Name">
+    </div>
+</div>*@
+<div class="row">
+    <div class="col-12">
+        <a asp-controller="Buy" asp-action="BuyProduct" asp-route-id="@Model.Id">
+            خرید
+        </a>
+        <p>نام محصول: @Model.Name</p>
+        @if (Model.Discount > 0)
+        {
+            <p>قیمت اصلی: <del>@Model.Price.ToString("N0")</del> تومان ، تخفیف: <mark>@Model.Discount %</mark></p>
+            <p>قیمت نهایی: @Model.DiscountPrice.ToString("N0") تومان</p>
+        }
+        else
+        {
+            <p>قیمت: @Model.Price </p>
+        }
+        @if (Model.IsAlwaysValid)
+        {
+            <p>موجود است</p>
+        }
+        else
+        {
+            if (@Model.Existance == "0")
+            {
+                <p>تمام شده است</p>
+            }
+            else
+            {
+                <p>@Model.Existance عدد موجود است</p>
+            }
+        }
+        <p>توضیحات: @Model.Description</p>
+
+
+        @if (Model.Color is not null)
+        {
+            <p>رنگ : @Model.Color</p>
+        }
+        @if (Model.Size is not null)
+        {
+            <p>اندازه : @Model.Size</p>
+        }
+        @if (Model.Country is not null)
+        {
+            <p>کشور سازنده : @Model.Country</p>
+        }
+        @if (Model.Model is not null)
+        {
+            <p>مدل : @Model.Model</p>
+        }
+        @if (Model.Brand is not null)
+        {
+            <p>برند : @Model.Brand</p>
+        }
+        @if (Model.Gender is not null)
+        {
+            <p>جنس : @Model.Gender</p>
+        }
+        @if (Model.Weight is not null)
+        {
+            <p>وزن : @Model.Weight</p>
+        }
+        @if (Model.Lenght is not null)
+        {
+            <p>طول : @Model.Lenght</p>
+        }
+        @if (Model.Wide is not null)
+        {
+            <p>عرض : @Model.Wide</p>
+        }
+        @if (Model.Height is not null)
+        {
+            <p>ارتفاع : @Model.Height</p>
+        }
+        @if (Model.Graphics is not null)
+        {
+            <p>گرافیک : @Model.Graphics</p>
+        }
+        @if (Model.Processor is not null)
+        {
+            <p>پردازنده : @Model.Processor</p>
+        }
+        @if (Model.RAM is not null)
+        {
+            <p>رم : @Model.RAM</p>
+        }
+        <br />
+
+    </div>
+</div>
+<hr />
+
+<script>
+    let slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        let i;
+        let slides = document.getElementsByClassName("mySlides");
+        let dots = document.getElementsByClassName("demo");
+        let captionText = document.getElementById("caption");
+        if (n > slides.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = slides.length }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+        captionText.innerHTML = dots[slideIndex - 1].alt;
+    }
+</script>

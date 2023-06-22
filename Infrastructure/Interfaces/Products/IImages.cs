@@ -7,6 +7,7 @@ namespace Infrastructure.Interfaces.Products
         public Task<Images> AddImages(Images images);
         public Task<List<Images>> GetAllImages();
         public Task<List<Images>> GetImagesByProductId(long productId);
+        public Task<List<Images>> GetFirstImagesByProductId(List<Product> products);
         public Images UpdateImages(Images images);
         public void DeleteImages(Images images);
     }

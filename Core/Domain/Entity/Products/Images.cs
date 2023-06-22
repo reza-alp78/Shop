@@ -5,7 +5,7 @@
         public long Id { get; set; }
         public long ProductId { get; set; }
         public Product product { get; set; }
-        public byte[] ImageProduct { get; set; }
+        public string ImageProduct { get; set; }
         
     }
 }

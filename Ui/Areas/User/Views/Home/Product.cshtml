@@ -1,0 +1,44 @@
+﻿@model List<Core.ViewModel.Products.ProductViewModel>
+
+<h1>محصولات</h1>
+
+<br />
+@foreach (var item in Model)
+{
+    <div class="row">
+        <div class="col-4 mt-1 mr-1">
+            <img style="width:400px;height:200px;border-radius:15px;border:2px solid #000000" class="imgStyle" src="@item.ImageString" alt="@item.Name">
+        </div>
+        <div class="col-4">
+            <p>نام محصول: @item.Name </p>
+            @if (item.Discount > 0)
+            {
+                <p>قیمت اصلی: <del>@item.Price.ToString("N0")</del> تخفیف: <mark>@item.Discount %</mark></p>
+                <p>قیمت نهایی: @item.DiscountPrice.ToString("N0") </p>
+            }
+            else
+            {
+                <p>قیمت: @item.Price.ToString("N0")</p>
+            }
+            @if (item.IsAlwaysValid)
+            {
+                <p>موجود است</p>
+            }
+            else
+            {
+                if (@item.Existance == "0")
+                {
+                    <p>تمام شده است</p>
+                }
+                else
+                {
+                    <p>@item.Existance عدد موجود است</p>
+                }       
+            }
+            <a asp-action="ProductDetails" asp-route-id="@item.Id">
+                مشاهده و خرید 
+            </a>
+        </div>
+    </div>
+    <hr />
+}

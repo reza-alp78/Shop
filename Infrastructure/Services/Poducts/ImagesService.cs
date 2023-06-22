@@ -54,6 +54,20 @@ namespace Infrastructure.Services.Poducts
             }
         }
 
+        public async Task<List<Images>> GetFirstImagesByProductId(List<Product> products)
+        {
+            var images = new List<Images>();
+            foreach (var product in products)
+            {
+                var query = $"SELECT * FROM Images WHERE ProductId = {product.Id}";
+                using (var connection = _dapper.CreateConnection())
+                {
+                    images.Add(await connection.QueryFirstOrDefaultAsync<Images>(query));
+                }
+            }
+            return images;
+        }
+
         public Images UpdateImages(Images images)
         {
             _db.Entry(images).State = EntityState.Modified;

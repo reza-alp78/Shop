@@ -11,6 +11,7 @@ using Core.Domain.Entity.Products;
 using Ui.HandShort;
 using Core.ViewModel.CategoriesAndProducts;
 using Core.Domain.Entity.CategoriesAndProducts;
+using System.IO;
 
 namespace Ui.Areas.Admin.Controllers
 {
@@ -62,6 +63,11 @@ namespace Ui.Areas.Admin.Controllers
                 int categoryId = Convert.ToInt32(HttpContext.Session.GetInt32("CategoryId"));
 
                 var whichCategory = await _whichCategory.GetWhichCategoryByIds(mainCategoryId, categoryId, Convert.ToInt32(subCategoryId));
+                if (whichCategory is null)
+                {
+                    TempData["Message"] = "اول خصوصیت تعریف کنید";
+                    return RedirectToAction("Index","SubCategory");
+                }
                 HttpContext.Session.SetInt32("WhichCategory", whichCategory.Id);
 
             }
@@ -106,6 +112,11 @@ namespace Ui.Areas.Admin.Controllers
                 int subCategoryId = Convert.ToInt32(HttpContext.Session.GetInt32("SubCategoryId"));
 
                 var whichCategory = await _whichCategory.GetWhichCategoryByIds(mainCategoryId, categoryId, subCategoryId, int.Parse(unImportantCategoryId));
+                if (whichCategory is null)
+                {
+                    TempData["Message"] = "اول خصوصیت تعریف کنید";
+                    return RedirectToAction("Index", "UnImportantCategory");
+                }
                 HttpContext.Session.SetInt32("WhichCategory", whichCategory.Id);
             }
 
@@ -203,15 +214,17 @@ namespace Ui.Areas.Admin.Controllers
                 await _saveChangesAsync.SaveChangesAsync();
                 //images save
                 try
-                {
+                {         
                     foreach (var Image in Images)
                     {
-                        await using (var stream = new MemoryStream())
+                        var fileName = Path.GetFileName(Image.FileName);
+                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images", fileName);
+                        await using (var fileStream = new FileStream(filePath, FileMode.Create))
                         {
                             var imagesViewModel = new ImagesViewModel();
-                            await Image.CopyToAsync(stream);
-                            imagesViewModel.ImageProduct = stream.ToArray();
+                            await Image.CopyToAsync(fileStream);
                             imagesViewModel.ProductId = product.Id;
+                            imagesViewModel.ImageProduct = "/images/" + fileName;
                             var imgs = _mapper.Map<ImagesViewModel, Images>(imagesViewModel);
                             await _images.AddImages(imgs);
                         }
@@ -318,12 +331,14 @@ namespace Ui.Areas.Admin.Controllers
                 {
                     foreach (var Image in Images)
                     {
-                        await using (var stream = new MemoryStream())
+                        var fileName = Path.GetFileName(Image.FileName);
+                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images", fileName);
+                        await using (var fileStream = new FileStream(filePath, FileMode.Create))
                         {
                             var imagesViewModel = new ImagesViewModel();
-                            await Image.CopyToAsync(stream);
-                            imagesViewModel.ImageProduct = stream.ToArray();
+                            await Image.CopyToAsync(fileStream);
                             imagesViewModel.ProductId = product.Id;
+                            imagesViewModel.ImageProduct = "/images/" + fileName;
                             var imgs = _mapper.Map<ImagesViewModel, Images>(imagesViewModel);
                             await _images.AddImages(imgs);
                         }
@@ -418,12 +433,14 @@ namespace Ui.Areas.Admin.Controllers
                 }
                 foreach (var Image in Images)
                 {
-                    await using (var stream = new MemoryStream())
+                    var fileName = Path.GetFileName(Image.FileName);
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images", fileName);
+                    await using (var fileStream = new FileStream(filePath, FileMode.Create))
                     {
                         var imagesViewModel = new ImagesViewModel();
-                        await Image.CopyToAsync(stream);
-                        imagesViewModel.ImageProduct = stream.ToArray();
+                        await Image.CopyToAsync(fileStream);
                         imagesViewModel.ProductId = product.Id;
+                        imagesViewModel.ImageProduct = "/images/" + fileName;
                         var imgs = _mapper.Map<ImagesViewModel, Images>(imagesViewModel);
                         await _images.AddImages(imgs);
                     }
@@ -497,12 +514,14 @@ namespace Ui.Areas.Admin.Controllers
                 }
                 foreach (var Image in Images)
                 {
-                    await using (var stream = new MemoryStream())
+                    var fileName = Path.GetFileName(Image.FileName);
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images", fileName);
+                    await using (var fileStream = new FileStream(filePath, FileMode.Create))
                     {
                         var imagesViewModel = new ImagesViewModel();
-                        await Image.CopyToAsync(stream);
-                        imagesViewModel.ImageProduct = stream.ToArray();
+                        await Image.CopyToAsync(fileStream);
                         imagesViewModel.ProductId = product.Id;
+                        imagesViewModel.ImageProduct = "/images/" + fileName;
                         var imgs = _mapper.Map<ImagesViewModel, Images>(imagesViewModel);
                         await _images.AddImages(imgs);
                     }
