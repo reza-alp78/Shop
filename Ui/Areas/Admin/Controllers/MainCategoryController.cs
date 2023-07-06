@@ -3,6 +3,7 @@ using Core.Domain.Entity.Categories;
 using Core.ViewModel.Categories;
 using Infrastructure.Interfaces;
 using Infrastructure.Interfaces.Categories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Ui.HandShort;
 
@@ -41,12 +42,14 @@ namespace Ui.Areas.Admin.Controllers
 
         #region Create
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult CreateMainCategory()
         {
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateMainCategory([Bind("MainCategoryName")] MainCategoryViewModel mainCategoryViewModel)
@@ -68,6 +71,7 @@ namespace Ui.Areas.Admin.Controllers
 
         #region Update
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> UpdateMainCategory(string id)
         {
@@ -76,6 +80,7 @@ namespace Ui.Areas.Admin.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateMainCategory([Bind("Id,MainCategoryName")] MainCategoryViewModel mainCategoryViewModel)
@@ -102,6 +107,7 @@ namespace Ui.Areas.Admin.Controllers
 
         #region Delete
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> DeleteMainCategory(string id)
         {

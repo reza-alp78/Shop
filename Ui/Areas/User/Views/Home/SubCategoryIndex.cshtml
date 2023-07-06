@@ -1,0 +1,28 @@
+﻿@model List<Core.ViewModel.Categories.SubCategoryViewModel>
+
+@Html.AntiForgeryToken()
+<h1>زیر دسته</h1>
+<br />
+@foreach (var item in Model)
+{
+    <div class="row">
+        <div class="col-3">
+            <a asp-controller="Home" asp-action="UnImportantCategoryIndex" asp-route-subCategoryId="@item.Id">
+                @item.SubCategoryName
+            </a>
+        </div>
+        <div class="col-3">
+            <a asp-controller="Home" asp-action="Product" asp-route-subCategoryId="@item.Id">
+                دیدن محصولات
+            </a>
+        </div>
+    </div>
+    <br />
+}
+<br />
+<br />
+<div class="row">
+    <div class="col-3">
+        <a asp-controller="Home" asp-action="CategoryIndex" >بازگشت</a>
+    </div>
+</div>

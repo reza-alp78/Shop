@@ -5,6 +5,8 @@ using Infrastructure.Interfaces.Categories;
 using Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Ui.HandShort;
+using Core.ViewModel.Admin;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Ui.Areas.Admin.Controllers
 {
@@ -60,6 +62,7 @@ namespace Ui.Areas.Admin.Controllers
 
         #region Create
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> CreateSubCategory()
         {
@@ -69,6 +72,7 @@ namespace Ui.Areas.Admin.Controllers
             return View(models);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateSubCategory([Bind("SubCategoryName")] SubCategoryViewModel subCategoryViewModel)
@@ -91,6 +95,7 @@ namespace Ui.Areas.Admin.Controllers
 
         #region Update
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> UpdateSubCategory(string id)
         {
@@ -99,6 +104,7 @@ namespace Ui.Areas.Admin.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateSubCategory([Bind("Id,SubCategoryName")] SubCategoryViewModel subCategoryViewModel)
@@ -126,6 +132,7 @@ namespace Ui.Areas.Admin.Controllers
 
         #region Delete
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> DeleteSubCategory(string id)
         {

@@ -3,11 +3,11 @@ using Infrastructure.Interfaces.Categories;
 using Microsoft.AspNetCore.Mvc;
 using Core.ViewModel.Categories;
 using Core.Domain.Entity.Categories;
-using Ui.Areas.User.Model;
 using Infrastructure.Interfaces.CategoriesAndProducts;
 using Core.Domain.Entity.Products;
 using Core.ViewModel.Products;
 using Infrastructure.Interfaces.Products;
+using Ui.HandShort;
 
 namespace Ui.Areas.User.Controllers
 {
@@ -45,40 +45,58 @@ namespace Ui.Areas.User.Controllers
         #region Index
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> MainCategoryIndex()
         {
             var mainCategories = await _mainCategory.GetAllMainCategories();
-            var categories = await _category.GetAllCategories();
-            var subCategories = await _subCategory.GetAllSubCategories();
-            var unImportantCategories = await _unImportantCategory.GetAllUnImportantCategories();
 
-            var mainCategoryViewModels = _mapper.Map<List<MainCategory>, List<MainCategoryViewModel>>(mainCategories);
-            var categoryViewModels = _mapper.Map<List<Category>, List<CategoryViewModel>>(categories);
-            var subCategoryViewModels = _mapper.Map<List<SubCategory>, List<SubCategoryViewModel>>(subCategories);
-            var unImportantCategoryViewModels = _mapper.Map<List<UnImportantCategory>, List<UnImportantCategoryViewModel>>(unImportantCategories);
+            var models = _mapper.Map<List<MainCategory>, List<MainCategoryViewModel>>(mainCategories);
 
-            var allCategories = new List<AllCategories>();
+            return View(models);
+        }
 
-            for (int i = 0; i < mainCategoryViewModels.Count(); i++)
+        [HttpGet]
+        public async Task<IActionResult> CategoryIndex(int mainCategoryId)
+        {
+            if (mainCategoryId == 0)
             {
-                var Categories = new AllCategories();
-
-                Categories.MainCategoryName = mainCategoryViewModels[i].MainCategoryName;
-                Categories.MainCategoryId = mainCategoryViewModels[i].Id;
-                Categories.CategoryName = categoryViewModels[i].CategoryName;
-                Categories.CategoryId = categoryViewModels[i].Id;
-                Categories.SubCategoryName = subCategoryViewModels[i].SubCategoryName;
-                Categories.SubCategoryId = subCategoryViewModels[i].Id;
-                //check exist
-                if (i <= unImportantCategoryViewModels.Count() - 1)
-                {
-                    Categories.UnImportantCategoryName = unImportantCategoryViewModels[i].UnImportantCategoryName;
-                    Categories.UnImportantCategoryId = unImportantCategoryViewModels[i].Id;
-                }
-                allCategories.Add(Categories);
+                mainCategoryId = Convert.ToInt32(HttpContext.Session.GetInt32("MainCategoryId"));
             }
+            HttpContext.Session.SetInt32("MainCategoryId", mainCategoryId);
+            var categories = await _category.GetAllCategoriesByMainCategoriesId(mainCategoryId);
 
-            return View(allCategories);
+            var models = _mapper.Map<List<Category>, List<CategoryViewModel>>(categories);
+
+            return View(models);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> SubCategoryIndex(int categoryId)
+        {
+            if (categoryId == 0)
+            {
+                categoryId = Convert.ToInt32(HttpContext.Session.GetInt32("CategoryId"));
+            }
+            HttpContext.Session.SetInt32("CategoryId", categoryId);
+            var subCategories = await _subCategory.GetAllSubCategoriesByCategoriesId(categoryId);
+
+            var models = _mapper.Map<List<SubCategory>, List<SubCategoryViewModel>>(subCategories);
+
+            return View(models);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UnImportantCategoryIndex(int subCategoryId)
+        {
+            if (subCategoryId == 0)
+            {
+                subCategoryId = Convert.ToInt32(HttpContext.Session.GetInt32("SubCategoryId"));
+            }
+            HttpContext.Session.SetInt32("SubCategoryId", subCategoryId);
+            var unImportantCategories = await _unImportantCategory.GetAllUnImportantCategoriesBySubCategoriesId(subCategoryId);
+
+            var models = _mapper.Map<List<UnImportantCategory>, List<UnImportantCategoryViewModel>>(unImportantCategories);
+
+            return View(models);
         }
 
         #endregion
@@ -86,16 +104,29 @@ namespace Ui.Areas.User.Controllers
         #region Product
 
         [HttpGet]
-        public async Task<IActionResult> Product(string mainCategoryId, string categoryId, string subCategoryId, string unImportantCategoryId)
+        public async Task<IActionResult> Product(int subCategoryId, int unImportantCategoryId)
         {
+            int mainCategoryId = Convert.ToInt32(HttpContext.Session.GetInt32("MainCategoryId"));
+            int categoryId = Convert.ToInt32(HttpContext.Session.GetInt32("CategoryId"));
+            
             WhichCategory whichCategoryId;
-            if (string.IsNullOrEmpty(unImportantCategoryId))
+            if (unImportantCategoryId is 0 && subCategoryId is not 0)
             {
-                whichCategoryId = await _whichCategory.GetWhichCategoryByIds(int.Parse(mainCategoryId), int.Parse(categoryId), int.Parse(subCategoryId));
+                whichCategoryId = await _whichCategory.GetWhichCategoryByIds(mainCategoryId, categoryId, subCategoryId);
+            }
+            else if (subCategoryId is 0 && unImportantCategoryId is not 0)
+            {
+                int _subCategoryId = Convert.ToInt32(HttpContext.Session.GetInt32("SubCategoryId"));
+                whichCategoryId = await _whichCategory.GetWhichCategoryByIds(mainCategoryId, categoryId, _subCategoryId, unImportantCategoryId);
             }
             else
             {
-                whichCategoryId = await _whichCategory.GetWhichCategoryByIds(int.Parse(mainCategoryId), int.Parse(categoryId), int.Parse(subCategoryId), int.Parse(unImportantCategoryId));
+                TempData["Message"] = Extension.AlertUnKnown();
+                return RedirectToAction("MainCategoryIndex");
+            }
+            if (whichCategoryId is null)
+            {
+                return View();
             }
             var products = await _productRegister.GetAllProductsByWhichCategoryId(whichCategoryId.Id);
             var models = _mapper.Map<List<Product>, List<ProductViewModel>>(products);
@@ -118,7 +149,7 @@ namespace Ui.Areas.User.Controllers
             var product = await _products.GetProductById(long.Parse(id));
             var model = _mapper.Map<Product, ProductViewModel>(product);
             var images = await _images.GetImagesByProductId(product.Id);
-            var imagesViewModels = _mapper.Map<List<Images>,List<ImagesViewModel>>(images);
+            var imagesViewModels = _mapper.Map<List<Images>, List<ImagesViewModel>>(images);
             for (int i = 0; i < imagesViewModels.Count(); i++)
             {
                 string a = imagesViewModels[i].ImageProduct;

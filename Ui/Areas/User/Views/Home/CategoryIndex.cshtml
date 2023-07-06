@@ -1,0 +1,23 @@
+﻿@model List<Core.ViewModel.Categories.CategoryViewModel>
+
+@Html.AntiForgeryToken()
+<h1>دسته</h1>
+<br />
+@foreach (var item in Model)
+{
+    <div class="row">
+        <div class="col-3">
+            <a asp-controller="Home" asp-action="SubCategoryIndex" asp-route-categoryId="@item.Id">
+                @item.CategoryName
+            </a>
+        </div>
+    </div>
+    <br />
+}
+<br />
+<br />
+<div class="row">
+    <div class="col-3">
+        <a asp-controller="Home" asp-action="MainCategoryIndex">بازگشت</a>
+    </div>
+</div>

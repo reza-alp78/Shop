@@ -5,6 +5,8 @@ using Infrastructure.Interfaces.Categories;
 using Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Ui.HandShort;
+using Core.ViewModel.Admin;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Ui.Areas.Admin.Controllers
 {
@@ -60,6 +62,7 @@ namespace Ui.Areas.Admin.Controllers
 
         #region Create
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> CreateCategory()
         {
@@ -69,6 +72,7 @@ namespace Ui.Areas.Admin.Controllers
             return View(models);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateCategory([Bind("CategoryName")] CategoryViewModel categoryViewModel)
@@ -91,6 +95,7 @@ namespace Ui.Areas.Admin.Controllers
 
         #region Update
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> UpdateCategory(string id)
         {
@@ -99,6 +104,7 @@ namespace Ui.Areas.Admin.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateCategory([Bind("Id,CategoryName")] CategoryViewModel categoryViewModel)
@@ -126,6 +132,7 @@ namespace Ui.Areas.Admin.Controllers
 
         #region Delete
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> DeleteCategory(string id)
         {

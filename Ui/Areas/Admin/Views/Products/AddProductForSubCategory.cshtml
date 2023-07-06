@@ -34,6 +34,7 @@
             <div class="col-4">
                 <label asp-for="Existance"></label>
                 <input type="number" asp-for="ExistanceProduct" />
+                <input type="hidden" asp-for="Existance" value="true" />
             </div>
         }
         else
@@ -48,6 +49,7 @@
             <div class="col-4">
                 <label asp-for="Color"></label>
                 <input type="text" asp-for="ColorProduct" />
+                <input type="hidden" asp-for="Color" value="true" />
             </div>
         }
         @if (Model.Size)
@@ -55,6 +57,7 @@
             <div class="col-4">
                 <label asp-for="Size"></label>
                 <input type="text" asp-for="SizeProduct" />
+                <input type="hidden" asp-for="Size" value="true" />
             </div>
         }
         @if (Model.Country)
@@ -62,6 +65,7 @@
             <div class="col-4">
                 <label asp-for="Country"></label>
                 <input type="text" asp-for="CountryProduct" />
+                <input type="hidden" asp-for="Country" value="true" />
             </div>
         }
         @if (Model.Model)
@@ -69,6 +73,7 @@
             <div class="col-4">
                 <label asp-for="Model"></label>
                 <input type="text" asp-for="ModelProduct" />
+                <input type="hidden" asp-for="Model" value="true" />
             </div>
         }
         @if (Model.Brand)
@@ -76,6 +81,7 @@
             <div class="col-4">
                 <label asp-for="Brand"></label>
                 <input type="text" asp-for="BrandProduct" />
+                <input type="hidden" asp-for="Brand" value="true" />
             </div>
         }
         @if (Model.Gender)
@@ -83,6 +89,7 @@
             <div class="col-4">
                 <label asp-for="Gender"></label>
                 <input type="text" asp-for="GenderProduct" />
+                <input type="hidden" asp-for="Gender" value="true" />
             </div>
         }
         @if (Model.Weight)
@@ -90,6 +97,7 @@
             <div class="col-4">
                 <label asp-for="Weight"></label>
                 <input type="text" asp-for="WeightProduct" />
+                <input type="hidden" asp-for="Weight" value="true" />
             </div>
         }
         @if (Model.Lenght)
@@ -97,6 +105,7 @@
             <div class="col-4">
                 <label asp-for="Lenght"></label>
                 <input type="text" asp-for="LenghtProduct" />
+                <input type="hidden" asp-for="Lenght" value="true" />
             </div>
         }
         @if (Model.Wide)
@@ -104,6 +113,7 @@
             <div class="col-4">
                 <label asp-for="Wide"></label>
                 <input type="text" asp-for="WideProduct" />
+                <input type="hidden" asp-for="Wide" value="true" />
             </div>
         }
         @if (Model.Height)
@@ -111,6 +121,7 @@
             <div class="col-4">
                 <label asp-for="Height"></label>
                 <input type="text" asp-for="HeightProduct" />
+                <input type="hidden" asp-for="Height" value="true" />
             </div>
         }
         @if (Model.Graphics)
@@ -118,6 +129,7 @@
             <div class="col-4">
                 <label asp-for="Graphics"></label>
                 <input type="text" asp-for="GraphicsProduct" />
+                <input type="hidden" asp-for="Graphics" value="true" />
             </div>
         }
         @if (Model.Processor)
@@ -125,6 +137,7 @@
             <div class="col-4">
                 <label asp-for="Processor"></label>
                 <input type="text" asp-for="ProcessorProduct" />
+                <input type="hidden" asp-for="Processor" value="true" />
             </div>
         }
         @if (Model.RAM)
@@ -132,6 +145,7 @@
             <div class="col-4">
                 <label asp-for="RAM"></label>
                 <input type="text" asp-for="RAMProduct" />
+                <input type="hidden" asp-for="RAM" value="true" />
             </div>
         }
     </div>
