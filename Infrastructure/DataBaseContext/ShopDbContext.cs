@@ -1,4 +1,5 @@
-﻿using Core.Domain.Entity.Categories;
+﻿using Core.Domain.Entity.Card;
+using Core.Domain.Entity.Categories;
 using Core.Domain.Entity.CategoriesAndProducts;
 using Core.Domain.Entity.DriverRegister;
 using Core.Domain.Entity.Products;
@@ -11,11 +12,13 @@ namespace Infrastructure.DataBaseContext
     public class ShopDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
     {
         public ShopDbContext(DbContextOptions<ShopDbContext> options) : base(options)
-        {         
+        {
         }
 
         #region DbSet
 
+        public DbSet<CardShopping> CardShoppings { get; set; }
+        public DbSet<HistoryCardShopping> HistoryCardShoppings { get; set; }
         public DbSet<MainCategory> MainCategories { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<SubCategory> SubCategories { get; set; }

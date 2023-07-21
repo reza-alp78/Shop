@@ -1,0 +1,40 @@
+﻿@model Core.ViewModel.Products.ProductViewModel
+<p>خرید</p>
+<div class="row">
+    <div class="col-3">
+        <label asp-for="Name"></label>
+        <p>@Model.Name</p>
+    </div>
+    <div class="col-3">
+        <label asp-for="Price"></label>
+        <p id="price">@Model.Price.ToString("N0")</p>
+    </div>
+    <div class="col-3">
+        <label asp-for="DiscountPrice"></label>
+        <p id="discountPrice">@Model.DiscountPrice.ToString("N0")</p>
+    </div>
+    
+    <div class="col-3">
+        <label>تعداد</label>
+        <input onchange="counter()" type="number" id="count" value="1" min="1" step="1" />
+    </div>
+    <div class="col-3">
+        <label>سود شما از این خرید:</label>
+        <p id="profit"></p>
+    </div>
+    <div class="col-3">
+        <a asp-area="Financial" asp-controller="Buy" asp-action="Buy" asp-route-productId="@Model.Id">
+            پرداخت 
+        </a>
+    </div>
+</div>
+<script type="text/javascript">
+    var profit = @Convert.ToInt32(Model.Price) - @Convert.ToInt32(Model.DiscountPrice);
+    document.getElementById('profit').innerHTML = profit.toLocaleString();
+    function counter() {
+        var val = document.getElementById('count').value;
+        document.getElementById('discountPrice').innerHTML = (val * @Convert.ToInt32(Model.DiscountPrice)).toLocaleString();
+        document.getElementById('price').innerHTML = (val * @Convert.ToInt32(Model.Price)).toLocaleString();
+        document.getElementById('profit').innerHTML = (val * profit).toLocaleString();
+        };
+</script>

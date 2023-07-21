@@ -137,8 +137,8 @@
 </div>*@
 <div class="row">
     <div class="col-12">
-        <a asp-controller="Buy" asp-action="BuyProduct" asp-route-id="@Model.Id">
-            خرید
+        <a asp-area="Financial" asp-controller="Buy" asp-action="Buy" asp-route-productId="@Model.Id">
+            افزودن به سبد خرید
         </a>
         <p>نام محصول: @Model.Name</p>
         @if (Model.Discount > 0)
