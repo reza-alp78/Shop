@@ -1,0 +1,168 @@
+﻿@model List<Core.ViewModel.Products.ProductViewModel>
+
+@Html.AntiForgeryToken()
+<h1 class="center">سبد خرید</h1>
+@if (Model.Count == 0)
+{
+    <p>سبد خرید شما خالی است</p>
+}
+@{
+    int i = 0;
+}
+@foreach (var item in Model)
+{
+    <div class="row">
+        <div class="col-3">
+            <label>نام محصول</label>
+            <p>@item.Name</p>
+        </div>
+        @if (item.Price.Equals(item.DiscountPrice))
+        {
+            <div class="col-3">
+                <label>قیمت</label>
+                <p class="price">@item.Price.ToString("N0") تومان</p>
+                <div class="discountPrice"></div>
+            </div>
+        }
+        else
+        {
+            <div class="col-3">
+                <label>قیمت اصلی</label>
+                <p class="price"><del>@item.Price.ToString("N0") تومان</del></p>
+            </div>
+            <div class="col-3">
+                <label>قیمت با تخفیف</label>
+                <p class="discountPrice">@item.DiscountPrice.ToString("N0") تومان</p>
+            </div>
+        }
+        @if (!item.Price.Equals(item.DiscountPrice))
+        {
+            <div class="col-1">
+                <label>تعداد</label>
+                <input onchange="counter(@i)" type="number" class="count" value="1" min="1" step="1" />
+            </div>
+            <div class="col-2">
+                <img src="@item.ImageString" style="width:100%;height:100px" alt="@item.Name">
+            </div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <div class="col-3">
+                <label>سود شما از این خرید:</label>
+                <p class="profit"></p>
+            </div>
+            <div class="col-3">
+                <label>هزینه قابل پرداخت:</label>
+                <p class="bill"></p>
+            </div>
+        }
+        else
+        {
+            <div class="col-3">
+                <label>هزینه قابل پرداخت:</label>
+                <div class="profit"></div>
+                <p class="bill"></p>
+            </div>
+            <div class="col-1">
+                <label>تعداد</label>
+                <input onchange="counter(@i)" type="number" class="count" value="1" min="1" step="1" />
+            </div>
+            <div class="col-2">
+                <img src="@item.ImageString" style="width:100%;height:100px" alt="@item.Name">
+            </div>
+        }
+
+        <div class="col-3">
+            <a asp-area="Financial" asp-controller="CardShopping" asp-action="DeleteToCardShopping" asp-route-productId="@item.Id">
+                حذف محصول
+            </a>
+        </div>
+        <div class="col-3">
+            <a asp-area="User" asp-controller="Home" asp-action="ProductDetails" asp-route-productId="@item.Id">
+                مشاهده محصول
+            </a>
+        </div>
+    </div>
+    <hr />
+    i++;
+}
+
+<div class="row">
+    @if (Model.Count != 0)
+    {
+        <div class="col-5">
+        </div>
+        <div class="col-7">
+            <label>هزینه کل:</label>
+            <p id="totalCast"></p>
+        </div>
+        <div class="col-9">
+            <a asp-area="Financial" asp-controller="Buy" asp-action="Buy">
+                پرداخت
+            </a>
+        </div>
+    }
+    <div class="col-3">
+        <a id="aa" asp-area="" asp-controller="Home" asp-action="Index">بازگشت</a>
+    </div>
+</div>
+<br />
+<script type="text/javascript">
+    //تمامی قیمت ها
+    var Prices = document.getElementsByClassName("price");
+    //تمامی تخفیف ها
+    var DiscountPrices = document.getElementsByClassName("discountPrice");
+    for (let i = 0; i < @Model.Count; i++) {
+        //اگر محصولی بدون تخفیف بود
+        if (DiscountPrices[i].innerHTML != "") {
+            //قیمت اصلی - قیمت با تخفیف
+            var profit = parseFloat(Prices[i].innerText.replaceAll(",", "")) - parseFloat(DiscountPrices[i].innerHTML.replaceAll(",", ""));
+            //حاصل در سود مشتری نمایش
+            document.getElementsByClassName("profit")[i].innerHTML = profit.toLocaleString() + " تومان ";
+            //مبلق کل پرداخت این محصول  بار اول خود قیمت با تخفیف است
+            document.getElementsByClassName("bill")[i].innerHTML = parseFloat(DiscountPrices[i].innerHTML.replaceAll(",", "")).toLocaleString() + " تومان ";
+        }
+        else {
+            //قیمت خود محصول در مقدار نهایی
+            document.getElementsByClassName("bill")[i].innerHTML = parseFloat(Prices[i].innerText.replaceAll(",", "")).toLocaleString() + " تومان ";
+        }
+    }
+    //قیمت کل
+    var bill = document.getElementsByClassName("bill");
+    var total = 0;
+    for (let i = 0; i < bill.length; i++) {
+        var a = bill[i].innerHTML.replaceAll(" تومان ", "");
+        total += parseFloat(a.replaceAll(",", ""));
+    }
+    document.getElementById("totalCast").innerHTML = total.toLocaleString() + " تومان ";
+    
+    function counter(i) {
+        var count = document.getElementsByClassName("count")[i].value;
+        var price = document.getElementsByClassName("price")[i].innerText;
+        var discountPrice = document.getElementsByClassName("discountPrice")[i].innerHTML;
+        if (discountPrice != "") {
+            var profit = parseFloat(price.replaceAll(",", "")) - parseFloat(discountPrice.replaceAll(",", ""));
+            //سود مشتری * تعداد محصول
+            document.getElementsByClassName("profit")[i].innerHTML = (profit * count).toLocaleString() + " تومان ";
+            //قیمت تخفیف * تعداد محصول
+            document.getElementsByClassName("bill")[i].innerHTML = (parseFloat(discountPrice.replaceAll(",", "")) * count).toLocaleString() + " تومان ";
+        }
+        else {
+            //اگه تخفیف نداشت خود محصول * تعداد
+            document.getElementsByClassName("bill")[i].innerHTML = (parseFloat(Prices[i].innerText.replaceAll(",", "")) * count).toLocaleString() + " تومان ";
+        }
+
+        //قیمت کل
+        var bill = document.getElementsByClassName("bill");
+        var total = 0;
+        for (let i = 0; i < bill.length; i++) {
+            var a = bill[i].innerHTML.replaceAll(" تومان ", "");
+            total += parseFloat(a.replaceAll(",", ""));
+        }
+        document.getElementById("totalCast").innerHTML = total.toLocaleString() + " تومان ";
+
+    }
+
+
+</script>

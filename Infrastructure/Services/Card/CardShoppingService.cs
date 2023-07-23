@@ -32,6 +32,15 @@ namespace Infrastructure.Services.Card
             }
         }
 
+        public async Task<CardShopping> GetCardShoppingByUserIdAndProductId(Guid userId, long productId)
+        {
+            var query = $"SELECT * FROM CardShoppings WHERE UserId = '{userId}' AND ProductId = {productId}";
+            using (var connection = _dapper.CreateConnection())
+            {
+                return await connection.QuerySingleOrDefaultAsync<CardShopping>(query);
+            }
+        }
+
         public async Task<CardShopping> AddCardShopping(CardShopping cardShopping)
         {
             await _db.CardShoppings.AddAsync(cardShopping);

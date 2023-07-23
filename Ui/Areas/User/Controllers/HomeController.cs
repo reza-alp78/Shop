@@ -144,16 +144,16 @@ namespace Ui.Areas.User.Controllers
         #region ProductDetails
 
         [HttpGet]
-        public async Task<IActionResult> ProductDetails(string id)
+        public async Task<IActionResult> ProductDetails(long productId)
         {
-            var product = await _products.GetProductById(long.Parse(id));
+            var product = await _products.GetProductById(productId);
             var model = _mapper.Map<Product, ProductViewModel>(product);
             var images = await _images.GetImagesByProductId(product.Id);
             var imagesViewModels = _mapper.Map<List<Images>, List<ImagesViewModel>>(images);
             for (int i = 0; i < imagesViewModels.Count(); i++)
             {
-                string a = imagesViewModels[i].ImageProduct;
-                model.ImagesStrings.Add(a);
+                string img = imagesViewModels[i].ImageProduct;
+                model.ImagesStrings.Add(img);
 
             }
             return View(model);

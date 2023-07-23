@@ -26,6 +26,7 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-controller="Account" asp-action="Logout">( خروج از حساب )</a>
                             </li>
+                            
                         }
                         else
                         {
@@ -33,6 +34,12 @@
                                 <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">ورود/عضویت</a>
                             </li>
                         }
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Financial" asp-controller="CardShopping" asp-action="Index">سبد خرید</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="User" asp-controller="Home" asp-action="MainCategoryIndex">محصولات</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Admin" asp-controller="Home" asp-action="Index">Admin</a>
                         </li>

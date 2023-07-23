@@ -44,6 +44,20 @@ namespace Ui.HandShort
         {
             return "با پشتیبان تماس بگیرید";
         }
+        public static string AlertAddToCard()
+        {
+            return "به سبد خریدتان اضافه شد";
+        }
+
+        public static string AlertDuplicateToCard()
+        {
+            return "قبلا به سبد خریدتان افزوده شده است";
+        }
+
+        public static string AlertDeleteToCard()
+        {
+            return "از سبد خریدتان حذف شد";
+        }
 
         #endregion
 
