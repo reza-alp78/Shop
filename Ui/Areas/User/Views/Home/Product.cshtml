@@ -26,21 +26,17 @@ else
                 {
                     <p>قیمت: @item.Price.ToString("N0")</p>
                 }
-                @if (item.IsAlwaysValid)
+                @if (!item.IsAlwaysValid)
                 {
-                    <p>موجود است</p>
-                }
-                else
-                {
-                    if (@item.Existance == "0")
-                    {
-                        <p>تمام شده است</p>
-                    }
-                    else
+                    @if (int.Parse(@item.Existance) <= 10 && @item.Existance != "0")
                     {
                         <p>@item.Existance عدد موجود است</p>
                     }
-                }
+                    @if (@item.Existance == "0")
+                    {
+                        <p>تمام شده است</p>
+                    }
+                }                
                 <a asp-action="ProductDetails" asp-route-productId="@item.Id">
                     مشاهده و خرید
                 </a>

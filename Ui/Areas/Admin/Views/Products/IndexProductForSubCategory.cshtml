@@ -15,7 +15,18 @@
 {
     <div class="row">
         <div class="col-3">
-            <label>@item.Name , @item.Price</label>
+            @if (item.IsAlwaysValid)
+            {
+                <label>
+                    نام: @item.Name  , نمایش همیشه موجود
+                </label>
+            }
+            else
+            {
+                <label>
+                    نام: @item.Name  تعداد: @item.Existance
+                </label>
+            }
         </div>
         <div class="col-1">
             <a asp-controller="Products" asp-action="UpdateProductForSubCategory" asp-route-id="@item.Id">ویرایش</a>
